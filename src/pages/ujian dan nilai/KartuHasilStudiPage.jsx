@@ -50,14 +50,32 @@ const KartuHasilStudiPage = () => {
     );
 
     const renderMobileCards = () => (
-        <div className="khs-card-container">
+        <div className="p-4 space-y-4">
             {currentKHS?.mata_kuliah.map((mk, index) => (
-                <div key={index} className="khs-card">
-                    <div>
-                        <h3 className="font-bold text-lg text-gray-800">{mk.nama_mk}</h3>
-                        <p className="text-sm text-gray-500">{mk.sks} SKS</p>
+                <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="flex-grow">
+                            <h3 className="font-bold text-lg text-gray-800">{mk.nama_mk}</h3>
+                            <p className="text-sm text-gray-500">{mk.kode_mk}</p>
+                        </div>
+                        <div className={`py-1 px-3 rounded-full text-white font-bold text-lg grade-badge grade-${mk.grade.toUpperCase()}`}>
+                            {mk.grade}
+                        </div>
                     </div>
-                    <div className={`grade-badge grade-${mk.grade.toUpperCase()}`}>{mk.grade}</div>
+                    <div className="text-sm text-gray-600 space-y-1">
+                        <p className="flex justify-between items-center">
+                            <span className="font-semibold">SKS:</span>
+                            <span>{mk.sks}</span>
+                        </p>
+                        <p className="flex justify-between items-center">
+                            <span className="font-semibold">Bobot:</span>
+                            <span>{mk.bobot}</span>
+                        </p>
+                        <p className="flex justify-between items-center">
+                            <span className="font-semibold">Bobot x SKS:</span>
+                            <span>{mk.bobot_sks}</span>
+                        </p>
+                    </div>
                 </div>
             ))}
         </div>
@@ -88,7 +106,18 @@ const KartuHasilStudiPage = () => {
                 </div>
 
                 <div id="semester-card-container">
-                    {window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()}
+                    {khsData?.data?.length > 0 ? (
+                        <>
+                        <div className='hidden md:block'>
+                            {renderDesktopTable()}
+                        </div>
+                        <div className='md:hidden'>
+                            {renderMobileCards()}
+                        </div>
+                        </>
+                    ): (
+                        <p className="text-gray-600">Data KHS belum tersedia.</p>
+                    )}
                 </div>
             </div>
         </main>
