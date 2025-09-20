@@ -69,14 +69,17 @@ const HistoriPinjamanPage = () => {
                 </div>
                 <div id="pinjaman-list-container" className="text-center py-4 text-gray-500">
                     {pinjamanData ? (
-                        pinjamanData.data.length > 0 ? (
-                            window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()
+                        <>
+                        <div className='hidden md:block'>
+                            {renderDesktopTable()}
+                        </div>
+                        <div className='md:hidden'>
+                            {renderMobileCards()}
+                        </div>
+                        </>
                         ) : (
                             <p>Tidak ada data Pinjaman yang ditemukan.</p>
-                        )
-                    ) : (
-                        <p>Memuat data...</p>
-                    )}
+                        )}
                 </div>
             </div>
         </main>

@@ -70,14 +70,17 @@ const PointBookPage = () => {
                 </div>
                 <div id="pointbook-list-container" className="text-center py-4 text-gray-500">
                     {pointBookData ? (
-                        pointBookData.data.length > 0 ? (
-                            window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()
+                        <>
+                        <div className='hidden md:block'>
+                            {renderDesktopTable()}
+                        </div>
+                        <div className='md:hidden'>
+                            {renderMobileCards()}
+                        </div>
+                        </>
                         ) : (
                             <p>Tidak ada data Point Book yang ditemukan.</p>
-                        )
-                    ) : (
-                        <p>Memuat data...</p>
-                    )}
+                        )}
                 </div>
             </div>
         </main>
