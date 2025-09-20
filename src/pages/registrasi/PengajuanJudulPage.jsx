@@ -1,6 +1,5 @@
-// src/pages/PengajuanJudulPage.js
 import React, { useState, useEffect } from 'react';
-import { getSkripsiData, getPengajuanJudulData, submitPengajuanJudul } from '../api/api';
+import { getSkripsiData, getPengajuanJudulData, submitPengajuanJudul } from '../../api/api';
 
 const PengajuanJudulPage = () => {
     const [skripsiData, setSkripsiData] = useState(null);

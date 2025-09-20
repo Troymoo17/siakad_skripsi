@@ -1,6 +1,5 @@
-// src/pages/PengajuanUjianPage.js
 import React, { useState, useEffect } from 'react';
-import { getPengajuanUjianData, submitPengajuanUjian, getMahasiswaData } from '../api/api';
+import { getPengajuanUjianData, submitPengajuanUjian, getMahasiswaData } from '../../api/api';
 
 const PengajuanUjianPage = () => {
     const [ujianData, setUjianData] = useState(null);

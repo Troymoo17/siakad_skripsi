@@ -1,6 +1,5 @@
-// src/pages/KMKPage.js
 import React, { useState, useEffect } from 'react';
-import { getKMKData } from '../api/api';
+import { getKMKData } from '../../api/api';
 
 const KMKPage = () => {
     const [kmkData, setKmkData] = useState(null);
@@ -66,11 +65,15 @@ const KMKPage = () => {
             </div>
             <div className="p-4 space-y-4">
                 {kmkData?.matakuliah.map((mk, index) => (
-                    <div key={index} className="khs-card flex-col items-start space-y-2">
-                        <h3 className="font-bold text-lg text-gray-800">{mk.nama_mk}</h3>
-                        <p className="text-xs text-gray-500">Kode: {mk.kode_mk}</p>
-                        <p className="text-xs text-gray-500">SKS: {mk.sks}</p>
-                        <p className="text-xs text-gray-500">Kelas: {mk.kelas}</p>
+                    <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
+                        <div className='border-b pb-2 mb-2'>
+                            <h3 className="font-bold text-lg text-gray-800">{mk.nama_mk}</h3>
+                        </div>
+                        <div className='text-sm text-gray-500 space-y-1'>
+                            <p className="text-xs text-gray-500">Kode: {mk.kode_mk}</p>
+                            <p className="text-xs text-gray-500">SKS: {mk.sks}</p>
+                            <p className="text-xs text-gray-500">Kelas: {mk.kelas}</p>
+                        </div>
                     </div>
                 ))}
             </div>

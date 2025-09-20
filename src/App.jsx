@@ -4,21 +4,22 @@ import LoginPage from './pages/LoginPage.jsx';
 import DashboardLayout from './components/DashboardLayout.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
-import JadwalKuliahPage from './pages/JadwalKuliahPage.jsx';
-import KehadiranPage from './pages/KehadiranPage.jsx';
-import DetailKehadiranPage from './pages/DetailKehadiranPage.jsx';
-import JadwalUjianPage from './pages/JadwalUjianPage.jsx';
-import KartuHasilStudiPage from './pages/KartuHasilStudiPage.jsx';
-import DaftarNilaiKumulatifPage from './pages/DaftarNilaiKumulatifPage.jsx';
-import KurikulumPage from './pages/KurikulumPage.jsx';
-import KRSPage from './pages/KRSPage.jsx';
-import KMKPage from './pages/KMKPage.jsx';
-import PembayaranPage from './pages/PembayaranPage.jsx';
-import PointBookPage from './pages/PointBookPage.jsx';
-import HistoriPinjamanPage from './pages/HistoriPinjamanPage.jsx';
-import PengajuanMagangPage from './pages/PengajuanMagangPage.jsx';
-import PengajuanJudulPage from './pages/PengajuanJudulPage.jsx';
-import PengajuanUjianPage from './pages/PengajuanUjianPage.jsx';
+import JadwalKuliahPage from './pages/perkuliahan/JadwalKuliahPage.jsx';
+import KehadiranPage from './pages/perkuliahan/KehadiranPage.jsx';
+import DetailKehadiranPage from './pages/perkuliahan/DetailKehadiranPage.jsx';
+import JadwalUjianPage from './pages/ujian dan nilai/JadwalUjianPage.jsx';
+import KartuHasilStudiPage from './pages/ujian dan nilai/KartuHasilStudiPage.jsx';
+import DaftarNilaiKumulatifPage from './pages/ujian dan nilai/DaftarNilaiKumulatifPage.jsx';
+import KurikulumPage from './pages/registrasi/KurikulumPage.jsx';
+import KRSPage from './pages/registrasi/KRSPage.jsx';
+import KMKPage from './pages/registrasi/KMKPage.jsx';
+import PembayaranPage from './pages/keuangan/PembayaranPage.jsx';
+import PointBookPage from './pages/histori/PointBookPage.jsx';
+import HistoriPinjamanPage from './pages/histori/HistoriPinjamanPage.jsx';
+import PengajuanMagangPage from './pages/registrasi/PengajuanMagangPage.jsx';
+import PengajuanJudulPage from './pages/registrasi/PengajuanJudulPage.jsx';
+import PengajuanUjianPage from './pages/registrasi/PengajuanUjianPage.jsx';
+import IkadIkasPage from './pages/registrasi/IkadIkasPage.jsx';
 
 import './index.css';
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="ujian-dan-nilai/jadwalUjian" element={<JadwalUjianPage />} />
           <Route path="ujian-dan-nilai/kartu-hasil-studi" element={<KartuHasilStudiPage />} />
           <Route path="ujian-dan-nilai/daftar-nilai-kumulatif" element={<DaftarNilaiKumulatifPage />} />
+          <Route path="registrasi/ikad-ikas" element={<IkadIkasPage />} />
           <Route path="registrasi/kurikulum" element={<KurikulumPage />} />
           <Route path="registrasi/krs" element={<KRSPage />} />
           <Route path="registrasi/kmk" element={<KMKPage />} />

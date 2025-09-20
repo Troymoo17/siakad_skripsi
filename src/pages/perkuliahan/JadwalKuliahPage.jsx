@@ -1,6 +1,5 @@
-// src/pages/JadwalKuliahPage.jsx
 import React, { useState, useEffect } from 'react';
-import { getJadwalKuliah, getMahasiswaData } from '../api/api';
+import { getJadwalKuliah, getMahasiswaData } from '../../api/api';
 
 const JadwalKuliahPage = () => {
   const [jadwal, setJadwal] = useState([]);

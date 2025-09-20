@@ -1,6 +1,5 @@
-// src/pages/HistoriPinjamanPage.js
 import React, { useState, useEffect } from 'react';
-import { getPinjamanHistory } from '../api/api';
+import { getPinjamanHistory } from '../../api/api';
 
 const HistoriPinjamanPage = () => {
     const [pinjamanData, setPinjamanData] = useState(null);

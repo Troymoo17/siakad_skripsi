@@ -201,3 +201,8 @@ export const submitPengajuanUjian = async (formData) => {
   const data = await response.json();
   return data;
 };
+export const getIkadIkasData = async (nim, semester) => {
+    const response = await fetch(`${BASE_URL}/ikad_ikas.php?nim=${nim}&semester=${semester}`);
+    const data = await response.json();
+    return data.status === 'success' ? data : null;
+};

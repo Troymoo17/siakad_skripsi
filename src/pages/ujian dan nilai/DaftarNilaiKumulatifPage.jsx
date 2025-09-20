@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDaftarNilaiKumulatif } from '../api/api';
+import { getDaftarNilaiKumulatif } from '../../api/api';
 
 const DaftarNilaiKumulatifPage = () => {
     const [nilaiData, setNilaiData] = useState([]);

@@ -1,6 +1,5 @@
-// src/pages/KartuHasilStudiPage.js
 import React, { useState, useEffect } from 'react';
-import { getKHSData } from '../api/api';
+import { getKHSData } from '../../api/api';
 
 const KartuHasilStudiPage = () => {
     const [khsData, setKhsData] = useState(null);

@@ -1,6 +1,5 @@
-// src/pages/KehadiranPage.js
 import React, { useState, useEffect } from 'react';
-import { getKehadiranSummary } from '../api/api';
+import { getKehadiranSummary } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
 const KehadiranPage = () => {

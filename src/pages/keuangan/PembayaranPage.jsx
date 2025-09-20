@@ -1,6 +1,5 @@
-// src/pages/PembayaranPage.js
 import React, { useState, useEffect } from 'react';
-import { getPembayaranData } from '../api/api';
+import { getPembayaranData } from '../../api/api';
 
 const PembayaranPage = () => {
     const [pembayaranData, setPembayaranData] = useState(null);

@@ -1,6 +1,5 @@
-// src/pages/KRSPage.js
 import React, { useState, useEffect } from 'react';
-import { getKRSData, submitKRS, getMahasiswaData } from '../api/api';
+import { getKRSData, submitKRS, getMahasiswaData } from '../../api/api';
 
 const KRSPage = () => {
     const [krsData, setKrsData] = useState(null);
@@ -78,9 +77,13 @@ const KRSPage = () => {
                 <label key={mk.kode_mk} className="khs-card flex-col items-start space-y-2 cursor-pointer">
                     <div className="flex items-center space-x-4 w-full">
                         <input type="checkbox" name="mata_kuliah[]" value={mk.kode_mk} checked={selectedCourses.includes(mk.kode_mk)} onChange={() => handleCheckboxChange(mk.kode_mk)} className="form-checkbox h-5 w-5 text-blue-600 rounded" />
-                        <h3 className="font-bold text-base text-gray-800">{mk.nama_mk}</h3>
+                            <h3 className="font-bold text-base text-gray-800">{mk.nama_mk}</h3>
                     </div>
-                    <div className="text-xs text-gray-500 w-full">Kode: {mk.kode_mk} | SKS: {mk.sks} | Semester: {mahasiswaData?.semester_sekarang}</div>
+                    <div className='text-sm text-gray-500 space-y-1'>
+                        <p>Kode:<span className='font-medium text-gray-700'>{mk.kode_mk}</span> </p>
+                        <p>SKS:<span className='font-medium text-gray-700'>{mk.sks}</span> </p>
+                        <p>Semester:<span className='font-medium text-gray-700'>{mahasiswaData?.semester_sekarang}</span></p>
+                    </div>
                 </label>
             ))}
         </div>

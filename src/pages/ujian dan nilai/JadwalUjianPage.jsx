@@ -1,6 +1,5 @@
-// src/pages/JadwalUjianPage.js
 import React, { useState, useEffect } from 'react';
-import { getJadwalUjian } from '../api/api';
+import { getJadwalUjian } from '../../api/api';
 
 const JadwalUjianPage = () => {
     const [jadwalUjian, setJadwalUjian] = useState(null);

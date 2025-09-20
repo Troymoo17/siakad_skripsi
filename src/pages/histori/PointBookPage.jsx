@@ -1,6 +1,5 @@
-// src/pages/PointBookPage.js
 import React, { useState, useEffect } from 'react';
-import { getPointBookHistory } from '../api/api';
+import { getPointBookHistory } from '../../api/api';
 
 const PointBookPage = () => {
     const [pointBookData, setPointBookData] = useState(null);

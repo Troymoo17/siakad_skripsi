@@ -1,6 +1,5 @@
-// src/pages/PengajuanMagangPage.js
 import React, { useState, useEffect } from 'react';
-import { getMahasiswaData, getMagangHistory, submitPengajuanMagang } from '../api/api';
+import { getMahasiswaData, getMagangHistory, submitPengajuanMagang } from '../../api/api';
 
 const PengajuanMagangPage = () => {
     const [mahasiswaData, setMahasiswaData] = useState(null);

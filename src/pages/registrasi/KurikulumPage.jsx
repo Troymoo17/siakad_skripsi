@@ -1,6 +1,5 @@
-// src/pages/KurikulumPage.js
 import React, { useState, useEffect } from 'react';
-import { getKurikulumData } from '../api/api';
+import { getKurikulumData } from '../../api/api';
 
 const KurikulumPage = () => {
     const [kurikulumData, setKurikulumData] = useState([]);
@@ -42,11 +41,15 @@ const KurikulumPage = () => {
     const renderMobileCards = () => (
         <div className="p-4 space-y-4">
             {kurikulumData.map((item, index) => (
-                <div key={index} className="khs-card flex-col items-start space-y-2">
-                    <h3 className="font-bold text-lg text-gray-800">{item.nama_mk}</h3>
-                    <p className="text-xs text-gray-500">Kode: {item.kode_mk}</p>
-                    <p className="text-xs text-gray-500">SKS: {item.sks}</p>
-                    <p className="text-xs text-gray-500">Grade Min: {item.grade_min}</p>
+                <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
+                    <div className="border-b pb-2 mb-2">
+                        <h3 className="font-bold text-lg text-gray-800">{item.nama_mk}</h3>
+                    </div>
+                    <div className="text-sm text-gray-500 space-y-1">
+                        <p className="text-xs text-gray-500">Kode: {item.kode_mk}</p>
+                        <p className="text-xs text-gray-500">SKS: {item.sks}</p>
+                        <p className="text-xs text-gray-500">Grade Min: {item.grade_min}</p>
+                    </div>
                 </div>
             ))}
         </div>
