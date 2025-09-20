@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage.jsx';
-import DashboardLayout from './components/DashboardLayout.jsx';
+import DashboardLayout from './components/dashboardLayout.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import JadwalKuliahPage from './pages/perkuliahan/JadwalKuliahPage.jsx';
@@ -11,15 +11,15 @@ import JadwalUjianPage from './pages/ujian dan nilai/JadwalUjianPage.jsx';
 import KartuHasilStudiPage from './pages/ujian dan nilai/KartuHasilStudiPage.jsx';
 import DaftarNilaiKumulatifPage from './pages/ujian dan nilai/DaftarNilaiKumulatifPage.jsx';
 import KurikulumPage from './pages/registrasi/KurikulumPage.jsx';
-import KRSPage from './pages/registrasi/KRSPage.jsx';
-import KMKPage from './pages/registrasi/KMKPage.jsx';
+import KRSPage from './pages/registrasi/kartuRencanaStudiPage.jsx';
+import KMKPage from './pages/registrasi/kartuMataKuliahPage.jsx';
 import PembayaranPage from './pages/keuangan/PembayaranPage.jsx';
 import PointBookPage from './pages/histori/PointBookPage.jsx';
 import HistoriPinjamanPage from './pages/histori/HistoriPinjamanPage.jsx';
 import PengajuanMagangPage from './pages/registrasi/PengajuanMagangPage.jsx';
 import PengajuanJudulPage from './pages/registrasi/PengajuanJudulPage.jsx';
 import PengajuanUjianPage from './pages/registrasi/PengajuanUjianPage.jsx';
-import IkadIkasPage from './pages/registrasi/IkadIkasPage.jsx';
+import IkadIkasPage from './pages/registrasi/ikad_ikasPage.jsx';
 
 import './index.css';
 
