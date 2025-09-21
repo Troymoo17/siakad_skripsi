@@ -20,6 +20,9 @@ import PengajuanMagangPage from './pages/registrasi/PengajuanMagangPage.jsx';
 import PengajuanJudulPage from './pages/registrasi/PengajuanJudulPage.jsx';
 import PengajuanUjianPage from './pages/registrasi/PengajuanUjianPage.jsx';
 import IkadIkasPage from './pages/registrasi/ikad_ikasPage.jsx';
+import BimbinganProposalPage from './pages/bimbingan/BimbinganProposalPage.jsx';
+import BimbinganSkripsiPage from './pages/bimbingan/BimbinganSkripsiPage.jsx';
+import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage.jsx';
 
 import './index.css';
 
@@ -47,6 +50,9 @@ const App = () => {
           <Route path="keuangan/pembayaran" element={<PembayaranPage />} />
           <Route path="histori/pointbook" element={<PointBookPage />} />
           <Route path="histori/histori_pinjaman" element={<HistoriPinjamanPage />} />
+          <Route path="bimbingan/proposal" element={<BimbinganProposalPage />} />
+          <Route path="bimbingan/skripsi" element={<BimbinganSkripsiPage />} />
+          <Route path="bimbingan/sidang" element={<BimbinganSidangPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -15,6 +15,7 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
     const [isHistoriOpen, setHistoriOpen] = useState(false);
     const [isPerkuliahanOpen, setPerkuliahanOpen] = useState(false);
     const [isUjianNilaiOpen, setUjianNilaiOpen] = useState(false);
+    const [isBimbinganOpen, setBimbinganOpen] = useState(false);
 
     const toggleDropdown = (setter) => setter(prev => !prev);
 
@@ -113,6 +114,18 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
                     <NavLink to="/dashboard/ujian-dan-nilai/jadwalUjian" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Jadwal Ujian</span></NavLink>
                     <NavLink to="/dashboard/ujian-dan-nilai/kartu-hasil-studi" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Kartu Hasil Studi</span></NavLink>
                     <NavLink to="/dashboard/ujian-dan-nilai/daftar-nilai-kumulatif" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Daftar Nilai Kumulatif</span></NavLink>
+                </div>
+                <div onClick={() => toggleDropdown(setBimbinganOpen)} className="sidebar-dropdown-toggle flex items-center justify-between py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 cursor-pointer">
+                    <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.484 9.352 5 7.636 5H4.25c-1.243 0-2.25 1.007-2.25 2.25v10.5c0 1.243 1.007 2.25 2.25 2.25h3.386c1.716 0 3.196.484 4.364 1.253m0-13C13.168 5.484 14.648 5 16.364 5h3.386c1.243 0 2.25 1.007 2.25 2.25v10.5c0 1.243-1.007 2.25-2.25 2.25h-3.386c-1.716 0-3.196-.484-4.364-1.253" /></svg>
+                        <span>Bimbingan</span>
+                    </div>
+                    <svg className={`w-4 h-4 ml-auto transform transition-transform duration-200 ${isBimbinganOpen ? 'rotate-90' : 'rotate-0'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                </div>
+                <div className={`submenu ${isBimbinganOpen ? 'block' : 'hidden'} space-y-1 pl-6 pt-1`}>
+                    <NavLink to="/dashboard/bimbingan/proposal" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Proposal</span></NavLink>
+                    <NavLink to="/dashboard/bimbingan/skripsi" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Skripsi/TA</span></NavLink>
+                    <NavLink to="/dashboard/bimbingan/sidang" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Sidang Skripsi/TA</span></NavLink>
                 </div>
 
             </nav>

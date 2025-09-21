@@ -168,7 +168,7 @@ export const getSkripsiData = async (nim) => {
       semester_pengajuan: mahasiswaData?.semester_sekarang || '',
       ipk_terakhir: ipkIpsData?.ipk || '',
       jumlah_point: pointData?.total_poin || '',
-      nilai_magang: 'A', // Asumsi nilai default
+      nilai_magang: 'A',
       sks_ditempuh: sksDitempuh,
       jumlah_nilai_d: jumlahNilaiD,
       jumlah_nilai_e: jumlahNilaiE,
@@ -205,4 +205,34 @@ export const getIkadIkasData = async (nim, semester) => {
     const response = await fetch(`${BASE_URL}/ikad_ikas.php?nim=${nim}&semester=${semester}`);
     const data = await response.json();
     return data.status === 'success' ? data : null;
+};
+export const getSidangProposalResult = async (nim) => {
+    const response = await fetch(`${BASE_URL}/sidang_proposal.php?nim=${nim}`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : [];
+};
+
+export const getBimbinganSkripsiHistory = async (nim) => {
+    const response = await fetch(`${BASE_URL}/bimbingan_skripsi.php?nim=${nim}`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : [];
+};
+
+export const submitBimbinganRevisi = async (postData) => {
+    const formData = new FormData();
+    for (const key in postData) {
+        formData.append(key, postData[key]);
+    }
+    const response = await fetch(`${BASE_URL}/bimbingan_skripsi.php`, {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    return data;
+};
+
+export const getBimbinganSidangResult = async (nim) => {
+    const response = await fetch(`${BASE_URL}/bimbingan_sidang.php?nim=${nim}`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : [];
 };
