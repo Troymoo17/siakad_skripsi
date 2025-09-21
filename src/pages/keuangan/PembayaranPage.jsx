@@ -138,7 +138,14 @@ const PembayaranPage = () => {
                 </div>
                 <div id="semester-card-container">
                     {pembayaranData ? (
-                        window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()
+                        <>
+                        <div className='hidden md:block'>
+                            {renderDesktopTable()}
+                        </div>
+                        <div className='md:hidden'>
+                            {renderMobileCards()}
+                        </div>
+                        </>
                     ) : (
                         <p className="text-center py-4 text-gray-500">Memuat data...</p>
                     )}

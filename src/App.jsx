@@ -23,6 +23,7 @@ import IkadIkasPage from './pages/registrasi/ikad_ikasPage.jsx';
 import BimbinganProposalPage from './pages/bimbingan/BimbinganProposalPage.jsx';
 import BimbinganSkripsiPage from './pages/bimbingan/BimbinganSkripsiPage.jsx';
 import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage.jsx';
+import DownloadPage from './pages/download/downloadPage.jsx';
 
 import './index.css';
 
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="bimbingan/proposal" element={<BimbinganProposalPage />} />
           <Route path="bimbingan/skripsi" element={<BimbinganSkripsiPage />} />
           <Route path="bimbingan/sidang" element={<BimbinganSidangPage />} />
+          <Route path="download" element={<DownloadPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

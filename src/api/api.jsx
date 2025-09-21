@@ -236,3 +236,8 @@ export const getBimbinganSidangResult = async (nim) => {
     const data = await response.json();
     return data.status === 'success' ? data.data : [];
 };
+export const getDownloadData = async () => {
+    const response = await fetch(`${BASE_URL}/download_materi.php`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : [];
+};
