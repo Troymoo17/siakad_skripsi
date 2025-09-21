@@ -66,7 +66,14 @@ const KurikulumPage = () => {
                     <p id="semester-info" className="text-sm text-gray-500 mt-1">Menampilkan mata kuliah kurikulum yang tersedia untuk semester saat ini.</p>
                 </div>
                 {kurikulumData.length > 0 ? (
-                    window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()
+                    <>
+                    <div className='hidden md:block'>
+                        {renderDesktopTable()}
+                    </div>
+                    <div className='md:hidden'>
+                        {renderMobileCards()}
+                    </div>
+                    </>
                 ) : (
                     <div className="text-center py-4 text-gray-500">Memuat data...</div>
                 )}

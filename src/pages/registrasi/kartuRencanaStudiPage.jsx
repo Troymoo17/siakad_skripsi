@@ -100,9 +100,14 @@ const KRSPage = () => {
                         <h2 className="font-bold text-lg">Pilih Mata Kuliah</h2>
                         <p className="text-sm text-gray-500 mt-1">Semester: <span id="krs-semester">{mahasiswaData?.semester_sekarang || 'Memuat...'}</span></p>
                     </div>
-                    {krsData ? (
+                    {krsData && krsData.mata_kuliah_tersedia.length > 0 ? (
                         <>
-                            {window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()}
+                        <div className='hidden md:block'>
+                            {renderDesktopTable()}
+                        </div>
+                        <div className='md:hidden'>
+                            {renderMobileCards()}
+                        </div>
                             <div className="p-4 md:p-6 border-t border-gray-200 flex justify-end">
                                 <button type="submit" className="bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-800 transition">Simpan KRS</button>
                             </div>

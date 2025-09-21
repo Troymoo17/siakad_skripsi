@@ -63,7 +63,7 @@ const KMKPage = () => {
                 </div>
                 <hr className="my-4" />
             </div>
-            <div className="p-4 space-y-4">
+            <div className="p-2 space-y-4">
                 {kmkData?.matakuliah.map((mk, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
                         <div className='border-b pb-2 mb-2'>
@@ -87,7 +87,14 @@ const KMKPage = () => {
             </header>
             <div id="kmk-content-container" className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
                 {kmkData ? (
-                    window.innerWidth < 768 ? renderMobileCards() : renderDesktopTable()
+                    <>
+                        <div className="hidden md:block">
+                            {renderDesktopTable()}
+                        </div>
+                        <div className="md:hidden">
+                            {renderMobileCards()}
+                        </div>
+                    </>
                 ) : (
                     <div className="text-center py-4 text-gray-500">Memuat data...</div>
                 )}

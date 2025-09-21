@@ -103,10 +103,10 @@ const IkadIkasPage = () => {
         if (!data || data.length === 0) {
             return <div className="text-center py-4 text-gray-500">Tidak ada data {type} yang ditemukan.</div>;
         }
-    
+
         if (type === 'IKAD') {
             return (
-                <div className="p-4 space-y-4">
+                <div className="p-1 space-y-4">
                     {data.map((item, index) => (
                         <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
                             <div className="border-b pb-2 mb-2">
@@ -132,10 +132,10 @@ const IkadIkasPage = () => {
             );
         } else if (type === 'IKAS') {
             return (
-                <div className="p-4 space-y-4">
+                <div className="p-1 space-y-4">
                     {data.map((item, index) => (
                         <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
-                             <div className="border-b pb-2 mb-2">
+                            <div className="border-b pb-2 mb-2">
                                 <h3 className="font-bold text-base text-gray-800">{item.nama_staf}</h3>
                             </div>
                             <div className="text-sm text-gray-500 space-y-1">
@@ -164,11 +164,33 @@ const IkadIkasPage = () => {
             <h1 className="text-xl md:text-2xl font-bold mb-6 text-gray-900">Kuisioner</h1>
             <div id="ikad-container" className="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-6">
                 <h2 className="text-lg md:text-xl font-semibold mb-4 border-b pb-2">IKAD (Indeks Kinerja Dosen)</h2>
-                {ikadIkasData?.ikad ? (window.innerWidth < 768 ? renderMobileCards(ikadIkasData.ikad, 'IKAD') : renderDesktopTable(ikadIkasData.ikad, 'IKAD')) : <div className="text-center py-4 text-gray-500">Memuat data...</div>}
+                {ikadIkasData?.ikad ? (
+                    <>
+                        <div className="hidden md:block">
+                            {renderDesktopTable(ikadIkasData.ikad, 'IKAD')}
+                        </div>
+                        <div className="md:hidden">
+                            {renderMobileCards(ikadIkasData.ikad, 'IKAD')}
+                        </div>
+                    </>
+                ) : (
+                    <div className="text-center py-4 text-gray-500">Memuat data...</div>
+                )}
             </div>
             <div id="ikas-container" className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
                 <h2 className="text-lg md:text-xl font-semibold mb-4 border-b pb-2">IKAS (Indeks Kinerja Administrasi dan Sarana)</h2>
-                {ikadIkasData?.ikas ? (window.innerWidth < 768 ? renderMobileCards(ikadIkasData.ikas, 'IKAS') : renderDesktopTable(ikadIkasData.ikas, 'IKAS')) : <div className="text-center py-4 text-gray-500">Memuat data...</div>}
+                {ikadIkasData?.ikas ? (
+                    <>
+                        <div className="hidden md:block">
+                            {renderDesktopTable(ikadIkasData.ikas, 'IKAS')}
+                        </div>
+                        <div className="md:hidden">
+                            {renderMobileCards(ikadIkasData.ikas, 'IKAS')}
+                        </div>
+                    </>
+                ) : (
+                    <div className="text-center py-4 text-gray-500">Memuat data...</div>
+                )}
             </div>
         </main>
     );
