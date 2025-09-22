@@ -13,44 +13,52 @@ const JadwalUjianPage = () => {
         fetchData();
     }, []);
 
-    const renderTable = (data, title) => {
+    const renderDesktopCards = (data) => {
         if (!data || data.length === 0) {
-            return <div className="text-center py-4 text-gray-500">Tidak ada {title} yang ditemukan.</div>;
+            return <div className="text-center py-4 text-gray-500">Tidak ada jadwal yang ditemukan.</div>;
         }
+
         return (
-            <div className="overflow-x-auto hidden md:block">
-                <table className="w-full text-sm text-left text-gray-500">
-                    <thead className="text-xs text-white uppercase bg-blue-600 rounded-t-lg">
-                        <tr>
-                            <th scope="col" className="py-3 px-6 rounded-tl-lg whitespace-nowrap">Tanggal</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Hari</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Mulai</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Selesai</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Ruangan</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Mata Kuliah</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Kelas</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Dosen</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">No. Kursi</th>
-                            <th scope="col" className="py-3 px-6 rounded-tr-lg whitespace-nowrap">Soal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((item, index) => (
-                            <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                                <td className="py-3 px-6 whitespace-nowrap">{item.tanggal}</td>
-                                <td className="py-3 px-6">{item.hari}</td>
-                                <td className="py-3 px-6">{item.mulai.substring(0, 5)}</td>
-                                <td className="py-3 px-6">{item.selesai.substring(0, 5)}</td>
-                                <td className="py-3 px-6">{item.ruangan}</td>
-                                <td className="py-3 px-6">{item.mata_kuliah}</td>
-                                <td className="py-3 px-6">{item.kelas}</td>
-                                <td className="py-3 px-6">{item.dosen}</td>
-                                <td className="py-3 px-6">{item.no_kursi}</td>
-                                <td className="py-3 px-6">{item.soal}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.map((item, index) => (
+                    <div key={index} className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 className="font-bold text-lg text-gray-800 border-b pb-2 mb-2">{item.mata_kuliah}</h3>
+                        <div className="text-sm text-gray-600 space-y-1">
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Tanggal:</span>
+                                <span>{item.tanggal}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Hari:</span>
+                                <span>{item.hari}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Waktu:</span>
+                                <span>{item.mulai.substring(0, 5)} - {item.selesai.substring(0, 5)}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Ruangan:</span>
+                                <span>{item.ruangan}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Kelas:</span>
+                                <span>{item.kelas}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Dosen:</span>
+                                <span>{item.dosen}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">No. Kursi:</span>
+                                <span>{item.no_kursi}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Soal:</span>
+                                <span>{item.soal}</span>
+                            </p>
+                        </div>
+                    </div>
+                ))}
             </div>
         );
     };
@@ -108,7 +116,7 @@ const JadwalUjianPage = () => {
                     <h2 className="text-lg md:text-xl font-semibold mb-4 border-b pb-2">Ujian Tengah Semester (UTS)</h2>
                     {jadwalUjian?.uts ? (
                         <>
-                            {renderTable(jadwalUjian.uts, "Ujian Tengah Semester (UTS)")}
+                            {renderDesktopCards(jadwalUjian.uts, "Ujian Tengah Semester (UTS)")}
                             {renderMobileCards(jadwalUjian.uts, "Ujian Tengah Semester (UTS)")}
                         </>
                     ) : (
@@ -120,7 +128,7 @@ const JadwalUjianPage = () => {
                     <h2 className="text-lg md:text-xl font-semibold mb-4 border-b pb-2">Ujian Akhir Semester (UAS)</h2>
                     {jadwalUjian?.uas ? (
                         <>
-                            {renderTable(jadwalUjian.uas, "Ujian Akhir Semester (UAS)")}
+                            {renderDesktopCards(jadwalUjian.uas, "Ujian Akhir Semester (UAS)")}
                             {renderMobileCards(jadwalUjian.uas, "Ujian Akhir Semester (UAS)")}
                         </>
                     ) : (

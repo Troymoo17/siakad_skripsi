@@ -13,11 +13,11 @@ const KMKPage = () => {
         fetchData();
     }, []);
 
-    const renderDesktopTable = () => (
+    const renderDesktopCards = () => (
         <>
-            <div className="p-4 md:p-8 rounded-xl shadow-lg">
-                <h2 className="text-lg md:text-xl font-semibold mb-4 border-b pb-2">Informasi Mahasiswa dan Daftar Mata Kuliah</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700 mb-6">
+            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200 mb-6">
+                <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Informasi Mahasiswa</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
                     <p>NIM: <span id="mahasiswa-nim" className="font-semibold">{kmkData?.mahasiswa?.nim || 'Memuat...'}</span></p>
                     <p>Nama: <span id="mahasiswa-nama" className="font-semibold">{kmkData?.mahasiswa?.nama || 'Memuat...'}</span></p>
                     <p>Program Studi: <span className="font-semibold">{kmkData?.mahasiswa?.prodi || 'Memuat...'}</span></p>
@@ -25,27 +25,26 @@ const KMKPage = () => {
                     <p className="md:col-span-2">Semester: <span id="semester-sekarang" className="font-semibold">{kmkData?.mahasiswa?.semester_sekarang || 'Memuat...'}</span></p>
                 </div>
             </div>
-            <div className="overflow-x-auto mt-4">
-                <table className="w-full text-left text-sm text-gray-700">
-                    <thead className="text-xs text-white uppercase bg-blue-600 rounded-t-lg">
-                        <tr>
-                            <th scope="col" className="py-3 px-6 rounded-tl-lg whitespace-nowrap">Kode Matkul</th>
-                            <th scope="col" className="py-3 px-6 whitespace-nowrap">Mata Kuliah</th>
-                            <th scope="col" className="py-3 px-6 text-center whitespace-nowrap">SKS</th>
-                            <th scope="col" className="py-3 px-6 rounded-tr-lg text-center whitespace-nowrap">Kelas</th>
-                        </tr>
-                    </thead>
-                    <tbody id="mata-kuliah-table-body">
-                        {kmkData?.matakuliah.map((mk, index) => (
-                            <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                                <td className="py-3 px-6 whitespace-nowrap">{mk.kode_mk}</td>
-                                <td className="py-3 px-6 whitespace-nowrap">{mk.nama_mk}</td>
-                                <td className="py-3 px-6 text-center whitespace-nowrap">{mk.sks}</td>
-                                <td className="py-3 px-6 text-center whitespace-nowrap">{mk.kelas}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {kmkData.matakuliah.map((mk, index) => (
+                    <div key={index} className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 className="font-bold text-lg text-gray-800 border-b pb-2 mb-2">{mk.nama_mk}</h3>
+                        <div className="text-sm text-gray-600 space-y-1">
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Kode Matkul:</span>
+                                <span>{mk.kode_mk}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">SKS:</span>
+                                <span>{mk.sks}</span>
+                            </p>
+                            <p className="flex justify-between items-center">
+                                <span className="font-semibold">Kelas:</span>
+                                <span>{mk.kelas}</span>
+                            </p>
+                        </div>
+                    </div>
+                ))}
             </div>
         </>
     );
@@ -89,7 +88,7 @@ const KMKPage = () => {
                 {kmkData ? (
                     <>
                         <div className="hidden md:block">
-                            {renderDesktopTable()}
+                            {renderDesktopCards()}
                         </div>
                         <div className="md:hidden">
                             {renderMobileCards()}
