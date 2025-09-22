@@ -60,7 +60,7 @@ const DashboardPage = () => {
           <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold text-gray-700">Pengumuman</h2>
-              <a href="#" className="text-xs text-blue-600 hover:text-blue-800">Lihat pengumuman tiga bulan terakhir</a>
+              <a href="/dashboard/informasi/pengumuman" className="text-xs text-blue-600 hover:text-blue-800">Lihat pengumuman tiga bulan terakhir</a>
             </div>
             <div className="space-y-4 text-sm">
               <div className="pb-3 border-b border-gray-200">

@@ -255,3 +255,14 @@ export const submitLaporanMagang = async (formData) => {
     const data = await response.json();
     return data;
 };
+export const getAnnouncements = async () => {
+    const response = await fetch(`${BASE_URL}/pengumuman.php`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : [];
+};
+
+export const getAnnouncementDetail = async (id) => {
+    const response = await fetch(`${BASE_URL}/pengumuman.php?id=${id}`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : null;
+};

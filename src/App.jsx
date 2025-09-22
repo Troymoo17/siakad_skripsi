@@ -25,8 +25,11 @@ import BimbinganSkripsiPage from './pages/bimbingan/BimbinganSkripsiPage.jsx';
 import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage.jsx';
 import DownloadPage from './pages/download/downloadPage.jsx';
 import UploadMagangPage from './pages/upload/uploadMagang.jsx';
+import PengumumanPage from './pages/informasi/pengumumanPage.jsx';
+import PengumumanDetailPage from './pages/informasi/detailPengumumanPage.jsx';
 
 import './index.css';
+import DetailPengumumanPage from './pages/informasi/detailPengumumanPage.jsx';
 
 const App = () => {
   return (
@@ -57,6 +60,8 @@ const App = () => {
           <Route path="bimbingan/sidang" element={<BimbinganSidangPage />} />
           <Route path="download" element={<DownloadPage />} />
           <Route path="magang" element={<UploadMagangPage />} />
+          <Route path="informasi/pengumuman" element={<PengumumanPage />} />
+          <Route path="informasi/pengumuman/:id" element={<DetailPengumumanPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
