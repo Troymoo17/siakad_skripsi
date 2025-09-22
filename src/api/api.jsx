@@ -241,3 +241,17 @@ export const getDownloadData = async () => {
     const data = await response.json();
     return data.status === 'success' ? data.data : [];
 };
+export const getLaporanMagangHistory = async (nim) => {
+    const response = await fetch(`${BASE_URL}/laporan_magang.php?nim=${nim}`);
+    const data = await response.json();
+    return data.status === 'success' ? data.data : [];
+};
+
+export const submitLaporanMagang = async (formData) => {
+    const response = await fetch(`${BASE_URL}/laporan_magang.php`, {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    return data;
+};

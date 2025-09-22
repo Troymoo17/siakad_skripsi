@@ -24,6 +24,7 @@ import BimbinganProposalPage from './pages/bimbingan/BimbinganProposalPage.jsx';
 import BimbinganSkripsiPage from './pages/bimbingan/BimbinganSkripsiPage.jsx';
 import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage.jsx';
 import DownloadPage from './pages/download/downloadPage.jsx';
+import UploadMagangPage from './pages/upload/uploadMagang.jsx';
 
 import './index.css';
 
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="bimbingan/skripsi" element={<BimbinganSkripsiPage />} />
           <Route path="bimbingan/sidang" element={<BimbinganSidangPage />} />
           <Route path="download" element={<DownloadPage />} />
+          <Route path="magang" element={<UploadMagangPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
