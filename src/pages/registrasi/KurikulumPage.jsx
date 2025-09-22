@@ -63,7 +63,9 @@ const KurikulumPage = () => {
                 <div className="p-4">
                     {kurikulumData.length > 0 ? (
                         <>
-                        {renderDesktopCards()}
+                        <div className='hidden md:block'>
+                            {renderDesktopCards()}
+                        </div>
                         <div className='md:hidden'>
                             {renderMobileCards()}
                         </div>

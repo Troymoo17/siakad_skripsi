@@ -42,37 +42,28 @@ const KRSPage = () => {
         }
     };
 
-    const renderDesktopTable = () => (
-        <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-gray-500">
-                <thead className="text-xs text-white uppercase bg-blue-600 rounded-t-lg">
-                    <tr>
-                        <th scope="col" className="py-3 px-6 rounded-tl-lg">Pilih</th>
-                        <th scope="col" className="py-3 px-6">Kode Mata Kuliah</th>
-                        <th scope="col" className="py-3 px-6">Mata Kuliah</th>
-                        <th scope="col" className="py-3 px-6 text-center">SKS</th>
-                        <th scope="col" className="py-3 px-6 rounded-tr-lg text-center">Semester</th>
-                    </tr>
-                </thead>
-                <tbody id="krs-table-body">
-                    {krsData.mata_kuliah_tersedia.map(mk => (
-                        <tr key={mk.kode_mk} className="bg-white border-b hover:bg-gray-50">
-                            <td className="py-3 px-6 text-center">
-                                <input type="checkbox" name="mata_kuliah[]" value={mk.kode_mk} checked={selectedCourses.includes(mk.kode_mk)} onChange={() => handleCheckboxChange(mk.kode_mk)} />
-                            </td>
-                            <td className="py-3 px-6">{mk.kode_mk}</td>
-                            <td className="py-3 px-6">{mk.nama_mk}</td>
-                            <td className="py-3 px-6 text-center">{mk.sks}</td>
-                            <td className="py-3 px-6 text-center">{mahasiswaData?.semester_sekarang}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+    const renderDesktopCards = () => (
+        <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {krsData.mata_kuliah_tersedia.map(mk => (
+                <label key={mk.kode_mk} className="bg-white p-4 rounded-xl shadow-md border border-gray-200 flex items-start space-x-4 cursor-pointer hover:bg-gray-50 transition">
+                    <input type="checkbox" name="mata_kuliah[]" value={mk.kode_mk} checked={selectedCourses.includes(mk.kode_mk)} onChange={() => handleCheckboxChange(mk.kode_mk)} className="form-checkbox h-5 w-5 text-blue-600 rounded mt-1 flex-shrink-0" />
+                    <div className="flex-grow">
+                        <h3 className="font-bold text-base text-gray-800">{mk.nama_mk}</h3>
+                        <div className="text-sm text-gray-500 space-y-1 mt-1">
+                            <p className="flex justify-between">
+                                <span>Kode: {mk.kode_mk}</span>
+                                <span>SKS: {mk.sks}</span>
+                            </p>
+                            <p>Semester: {mahasiswaData?.semester_sekarang}</p>
+                        </div>
+                    </div>
+                </label>
+            ))}
         </div>
     );
 
     const renderMobileCards = () => (
-        <div className="p-4 space-y-4">
+        <div className="p-4 space-y-4 md:hidden">
             {krsData.mata_kuliah_tersedia.map(mk => (
                 <label key={mk.kode_mk} className="khs-card flex-col items-start space-y-2 cursor-pointer">
                     <div className="flex items-center space-x-4 w-full">
@@ -100,21 +91,21 @@ const KRSPage = () => {
                         <h2 className="font-bold text-lg">Pilih Mata Kuliah</h2>
                         <p className="text-sm text-gray-500 mt-1">Semester: <span id="krs-semester">{mahasiswaData?.semester_sekarang || 'Memuat...'}</span></p>
                     </div>
-                    {krsData && krsData.mata_kuliah_tersedia.length > 0 ? (
-                        <>
-                        <div className='hidden md:block'>
-                            {renderDesktopTable()}
-                        </div>
-                        <div className='md:hidden'>
-                            {renderMobileCards()}
-                        </div>
-                            <div className="p-4 md:p-6 border-t border-gray-200 flex justify-end">
-                                <button type="submit" className="bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-800 transition">Simpan KRS</button>
+                    <div className="p-4">
+                        {krsData && krsData.mata_kuliah_tersedia.length > 0 ? (
+                            <>
+                                {renderDesktopCards()}
+                            <div className='md:hidden'>
+                                {renderMobileCards()}
                             </div>
-                        </>
-                    ) : (
-                        <div className="text-center py-4 text-gray-500">Memuat daftar mata kuliah...</div>
-                    )}
+                                <div className="p-4 md:p-6 border-t border-gray-200 flex justify-end">
+                                    <button type="submit" className="bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-800 transition">Simpan KRS</button>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="text-center py-4 text-gray-500">Memuat daftar mata kuliah...</div>
+                        )}
+                    </div>
                 </form>
             </div>
         </main>
