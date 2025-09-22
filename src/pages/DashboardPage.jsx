@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getIpkIpsData, getJadwalKuliah } from '../api/api';
+import { getIpkIpsData, getJadwalKuliah, getAnnouncements } from '../api/api';
+import { Link } from 'react-router-dom';
 
 const DashboardPage = () => {
   const [ipkData, setIpkData] = useState(null);
   const [jadwalData, setJadwalData] = useState([]);
+  const [pengumumanData, setPengumumanData] = useState([]);
 
   useEffect(() => {
     const nim = localStorage.getItem('loggedInUserNim');
@@ -11,17 +13,21 @@ const DashboardPage = () => {
       const fetchData = async () => {
         const ipk = await getIpkIpsData(nim);
         const jadwal = await getJadwalKuliah(nim);
+        const announcements = await getAnnouncements();
+        
         setIpkData(ipk);
         const hariIni = new Date().toLocaleDateString('id-ID', { weekday: 'long' });
         setJadwalData(jadwal.filter(item => item.hari.toLowerCase() === hariIni.toLowerCase()));
+        setPengumumanData(announcements);
       };
       fetchData();
     }
   }, []);
 
-  const totalSks = ipkData?.ips_per_semester.reduce((sum, semester) => sum + parseInt(semester.total_sks), 0);
-  const lastSemester = ipkData?.ips_per_semester[ipkData.ips_per_semester.length - 1];
+  const totalSks = ipkData?.ips_per_semester?.reduce((sum, semester) => sum + parseInt(semester.total_sks), 0) || 0;
+  const lastSemester = ipkData?.ips_per_semester?.[ipkData.ips_per_semester.length - 1];
   const ipkPercentage = ipkData ? (parseFloat(ipkData.ipk) / 4.00) * 100 : 0;
+  const recentAnnouncements = pengumumanData.slice(0, 3);
 
   return (
     <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
@@ -43,7 +49,7 @@ const DashboardPage = () => {
             <div className="flex flex-col md:flex-row justify-around w-full gap-4">
               <div className="bg-white p-4 rounded-lg shadow-sm flex-1 text-center border border-gray-300">
                 <div className="text-xs text-gray-500">Semester</div>
-                <div className="text-2xl font-bold text-gray-800">{ipkData?.ips_per_semester.length || '...'}</div>
+                <div className="text-2xl font-bold text-gray-800">{ipkData?.ips_per_semester?.length || '...'}</div>
               </div>
               <div className="bg-white p-4 rounded-lg shadow-sm flex-1 text-center border border-gray-300">
                 <div className="text-xs text-gray-500">Tahun Akademik</div>
@@ -60,21 +66,21 @@ const DashboardPage = () => {
           <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold text-gray-700">Pengumuman</h2>
-              <a href="/dashboard/informasi/pengumuman" className="text-xs text-blue-600 hover:text-blue-800">Lihat pengumuman tiga bulan terakhir</a>
+              <Link to="/dashboard/informasi/pengumuman" className="text-xs text-blue-600 hover:text-blue-800">Pengumuman tiga bulan terakhir</Link>
             </div>
             <div className="space-y-4 text-sm">
-              <div className="pb-3 border-b border-gray-200">
-                <div className="text-xs text-gray-500">26 Agustus 2025</div>
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-800">Jadwal input krs Gasal 2025/2026</a>
-              </div>
-              <div className="pb-3 border-b border-gray-200">
-                <div className="text-xs text-gray-500">26 Agustus 2025</div>
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-800">Jadwal dan daftar peserta ujian sertifikasi CCNA</a>
-              </div>
-              <div className="pb-3 border-b border-gray-200">
-                <div className="text-xs text-gray-500">26 Agustus 2025</div>
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-800">Surat adopsi hasil karya mahasiswa TTG</a>
-              </div>
+                {recentAnnouncements.length > 0 ? (
+                    recentAnnouncements.map((item, index) => (
+                        <div key={index} className="pb-3 border-b border-gray-200">
+                            <div className="text-xs text-gray-500">{item.tanggal_upload}</div>
+                            <Link to={`/dashboard/informasi/pengumuman/${item.id}`} className="font-medium text-blue-600 hover:text-blue-800">
+                                {item.judul}
+                            </Link>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-sm text-gray-500 italic">Tidak ada pengumuman dalam tiga bulan terakhir.</p>
+                )}
             </div>
           </section>
           <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">

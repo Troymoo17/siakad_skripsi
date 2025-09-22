@@ -127,15 +127,14 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
                     <NavLink to="/dashboard/bimbingan/skripsi" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Skripsi/TA</span></NavLink>
                     <NavLink to="/dashboard/bimbingan/sidang" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Sidang Skripsi/TA</span></NavLink>
                 </div>
-                <NavLink to="/dashboard/download" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    <span>Download</span>
-                </NavLink>
                 <NavLink to="/dashboard/magang" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" /></svg>
                     <span>Upload</span>
                 </NavLink>
-
+                <NavLink to="/dashboard/download" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    <span>Download</span>
+                </NavLink>
             </nav>
             <div className="space-y-2 text-sm px-2 mt-auto border-t border-gray-200 pt-4">
                 <button onClick={handleLogout} className="w-full flex items-center space-x-2 py-2 px-3 rounded-lg text-red-600 hover:bg-red-50 font-semibold transition duration-150">
