@@ -26,10 +26,10 @@ import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage.jsx';
 import DownloadPage from './pages/download/downloadPage.jsx';
 import UploadMagangPage from './pages/upload/uploadMagang.jsx';
 import PengumumanPage from './pages/informasi/pengumumanPage.jsx';
-import PengumumanDetailPage from './pages/informasi/detailPengumumanPage.jsx';
+import DetailPengumumanPage from './pages/informasi/detailPengumumanPage.jsx';
+import HotspotPage from './pages/registrasi/hotspotPage.jsx';
 
 import './index.css';
-import DetailPengumumanPage from './pages/informasi/detailPengumumanPage.jsx';
 
 const App = () => {
   return (
@@ -62,6 +62,7 @@ const App = () => {
           <Route path="magang" element={<UploadMagangPage />} />
           <Route path="informasi/pengumuman" element={<PengumumanPage />} />
           <Route path="informasi/pengumuman/:id" element={<DetailPengumumanPage />} />
+          <Route path="registrasi/hotspot" element={<HotspotPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

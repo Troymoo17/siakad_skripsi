@@ -266,3 +266,15 @@ export const getAnnouncementDetail = async (id) => {
     const data = await response.json();
     return data.status === 'success' ? data.data : null;
 };
+export const submitHotspotPassword = async (nim, password) => {
+    const formData = new FormData();
+    formData.append('nim', nim);
+    formData.append('password', password);
+
+    const response = await fetch(`${BASE_URL}/hotspot.php`, {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    return data;
+};
