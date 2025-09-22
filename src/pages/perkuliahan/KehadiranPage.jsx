@@ -25,10 +25,6 @@ const KehadiranPage = () => {
                 <h1 className="text-xl md:text-2xl font-bold text-gray-800">Kehadiran</h1>
             </header>
             <div id="kehadiran-content-container" className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="p-4 md:p-6 border-b border-gray-200">
-                    <h2 className="font-bold text-lg">Rekapitulasi Kehadiran Mata Kuliah</h2>
-                    <p className="text-sm text-gray-500 mt-1">Rekapitulasi total kehadiran berdasarkan status.</p>
-                </div>
                 {kehadiranData.length > 0 ? (
                     <div className="p-4 space-y-4">
                         {kehadiranData.map(item => (
