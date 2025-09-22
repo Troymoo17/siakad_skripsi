@@ -36,8 +36,9 @@ const KehadiranPage = () => {
                                 <h3 className="font-bold text-lg text-gray-800">{item.mata_kuliah}</h3>
                                 <div className="w-full flex justify-between space-x-2 text-xs text-gray-500">
                                     <div className="flex-1 p-2 bg-gray-100 rounded-lg text-center">Hadir: <span className="font-semibold text-green-600">{item.hadir}</span></div>
-                                    <div className="flex-1 p-2 bg-gray-100 rounded-lg text-center">Izin: <span className="font-semibold text-yellow-600">{item.izin}</span></div>
-                                    <div className="flex-1 p-2 bg-gray-100 rounded-lg text-center">Sakit: <span className="font-semibold text-red-600">{item.sakit}</span></div>
+                                    <div className="flex-1 p-2 bg-gray-100 rounded-lg text-center">Izin: <span className="font-semibold text-blue-600">{item.izin}</span></div>
+                                    <div className="flex-1 p-2 bg-gray-100 rounded-lg text-center">Sakit: <span className="font-semibold text-orange-600">{item.sakit}</span></div>
+                                    <div className="flex-1 p-2 bg-gray-100 rounded-lg text-center">Alfa: <span className="font-semibold text-red-600">{item.alfa}</span></div>
                                 </div>
                                 <button onClick={() => handleDetailClick(item.kode_mk, item.mata_kuliah)} className="w-full text-blue-600 hover:underline text-sm mt-2">Detail</button>
                             </div>
