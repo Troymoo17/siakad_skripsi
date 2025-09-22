@@ -18,75 +18,76 @@ const JadwalKuliahPage = () => {
     fetchJadwal();
   }, []);
 
-  const renderDesktopTable = () => (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm text-left text-gray-500">
-        <thead className="text-xs text-white uppercase bg-blue-600 rounded-t-lg">
-          <tr>
-            <th scope="col" className="py-3 px-6 rounded-tl-lg whitespace-nowrap">Hari</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Jam Mulai</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Jam Selesai</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Ruang</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Kode Matkul</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Matkul</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Dosen</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Jenis</th>
-            <th scope="col" className="py-3 px-6 whitespace-nowrap">Kelas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {jadwal.map((item, index) => (
-            <tr key={index} className="bg-white border-b hover:bg-gray-50">
-              <td className="py-3 px-6 whitespace-nowrap">{item.hari}</td>
-              <td className="py-3 px-6">{item.jam_mulai.substring(0, 5)}</td>
-              <td className="py-3 px-6">{item.jam_selesai.substring(0, 5)}</td>
-              <td className="py-3 px-6">{item.ruang}</td>
-              <td className="py-3 px-6">{item.kode_matkul}</td>
-              <td className="py-3 px-6">{item.matkul}</td>
-              <td className="py-3 px-6">{item.dosen}</td>
-              <td className="py-3 px-6">{item.jenis}</td>
-              <td className="py-3 px-6">{item.kelas}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  const groupJadwalByDay = (data) => {
+    return data.reduce((acc, item) => {
+      const day = item.hari;
+      if (!acc[day]) {
+        acc[day] = [];
+      }
+      acc[day].push(item);
+      return acc;
+    }, {});
+  };
 
-  const renderMobileCards = () => (
-    <div className="grid grid-cols-1 gap-4">
-      {jadwal.map((item, index) => (
-        <div key={index} className="bg-white p-4 rounded-xl shadow border border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-md font-bold text-gray-800">{item.matkul}</h3>
-            <span className="text-sm font-semibold text-blue-600">{item.jenis}</span>
-          </div>
-          <div className="text-gray-600 space-y-1 text-sm">
-            <p className="flex justify-between items-center">
-              <span className="font-semibold">Hari:</span>
-              <span>{item.hari}</span>
-            </p>
-            <p className="flex justify-between items-center">
-              <span className="font-semibold">Waktu:</span>
-              <span>{item.jam_mulai.substring(0, 5)} - {item.jam_selesai.substring(0, 5)}</span>
-            </p>
-            <p className="flex justify-between items-center">
-              <span className="font-semibold">Ruang:</span>
-              <span>{item.ruang}</span>
-            </p>
-            <p className="flex justify-between items-center">
-              <span className="font-semibold">Kelas:</span>
-              <span>{item.kelas}</span>
-            </p>
-            <p className="flex justify-between items-center">
-              <span className="font-semibold">Dosen:</span>
-              <span>{item.dosen}</span>
-            </p>
-          </div>
+  const renderDesktopCards = () => {
+    const groupedJadwal = groupJadwalByDay(jadwal);
+    const orderedDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+    return (
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {orderedDays.map((day) => (
+                groupedJadwal[day] && (
+                    <div key={day} className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h2 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b">{day}</h2>
+                        <div className="space-y-4 text-sm">
+                            {groupedJadwal[day].map((item, index) => (
+                                <div key={index} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                    <h3 className="font-semibold text-gray-800">{item.matkul}</h3>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        {item.jam_mulai.substring(0, 5)} - {item.jam_selesai.substring(0, 5)} | Ruang: {item.ruang}
+                                    </p>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        Dosen: {item.dosen} | Kelas: {item.kelas}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
+  };
+
+  const renderMobileCards = () => {
+    const groupedJadwal = groupJadwalByDay(jadwal);
+    const orderedDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+    return (
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+            {orderedDays.map((day) => (
+                groupedJadwal[day] && (
+                    <div key={day} className="bg-white p-4 rounded-xl shadow border border-gray-200">
+                        <h2 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b">{day}</h2>
+                        <div className="space-y-4 text-sm">
+                            {groupedJadwal[day].map((item, index) => (
+                                <div key={index} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                    <h3 className="font-semibold text-gray-800">{item.matkul}</h3>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        {item.jam_mulai.substring(0, 5)} - {item.jam_selesai.substring(0, 5)} | Ruang: {item.ruang}
+                                    </p>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        Dosen: {item.dosen} | Kelas: {item.kelas}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )
+            ))}
+        </div>
+    );
+  };
 
   return (
     <main className="flex-1 p-4 md:p-6 lg:p-8">
@@ -107,12 +108,8 @@ const JadwalKuliahPage = () => {
         <div id="jadwal-kuliah-content-container" className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
           {jadwal.length > 0 ? (
             <>
-              <div className="hidden md:block">
-                {renderDesktopTable()}
-              </div>
-              <div className="md:hidden">
-                {renderMobileCards()}
-              </div>
+              {renderDesktopCards()}
+              {renderMobileCards()}
             </>
           ) : (
             <div className="text-center py-4 text-gray-500">
