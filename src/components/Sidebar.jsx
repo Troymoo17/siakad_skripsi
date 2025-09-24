@@ -16,6 +16,7 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
     const [isPerkuliahanOpen, setPerkuliahanOpen] = useState(false);
     const [isUjianNilaiOpen, setUjianNilaiOpen] = useState(false);
     const [isBimbinganOpen, setBimbinganOpen] = useState(false);
+    const [isSurveiOpen, setSurveiOpen] = useState(false);
 
     const toggleDropdown = (setter) => setter(prev => !prev);
 
@@ -128,6 +129,17 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
                     <NavLink to="/dashboard/bimbingan/skripsi" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Skripsi/TA</span></NavLink>
                     <NavLink to="/dashboard/bimbingan/sidang" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Sidang Skripsi/TA</span></NavLink>
                 </div>
+                  <div onClick={() => toggleDropdown(setSurveiOpen)} className="sidebar-dropdown-toggle flex items-center justify-between py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 cursor-pointer">
+            <div className="flex items-center space-x-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6 4h6" /></svg>
+                <span>Survei Kepuasan</span>
+            </div>
+            <svg className={`w-4 h-4 ml-auto transform transition-transform duration-200 ${isSurveiOpen ? 'rotate-90' : 'rotate-0'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+        </div>
+        <div className={`submenu ${isSurveiOpen ? 'block' : 'hidden'} space-y-1 pl-6 pt-1`}>
+            <NavLink to="/dashboard/survei-kepuasan/fasilitas" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Fasilitas</span></NavLink>
+            <NavLink to="/dashboard/survei-kepuasan/skripsi" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Skripsi</span></NavLink>
+        </div>
                 <NavLink to="/dashboard/magang" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" /></svg>
                     <span>Upload</span>

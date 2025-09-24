@@ -278,3 +278,16 @@ export const submitHotspotPassword = async (nim, password) => {
     const data = await response.json();
     return data;
 };
+export const submitSurveiKepuasan = async (nim, jenis_survei, jawaban) => {
+    const formData = new FormData();
+    formData.append('nim', nim);
+    formData.append('jenis_survei', jenis_survei);
+    formData.append('jawaban', JSON.stringify(jawaban));
+
+    const response = await fetch(`${BASE_URL}/survei_kepuasan.php`, {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    return data;
+};

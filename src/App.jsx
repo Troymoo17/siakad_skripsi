@@ -28,6 +28,8 @@ import UploadMagangPage from './pages/upload/uploadMagang';
 import PengumumanPage from './pages/informasi/pengumumanPage';
 import DetailPengumumanPage from './pages/informasi/detailPengumumanPage';
 import HotspotPage from './pages/registrasi/hotspotPage';
+import SurveiKepuasanFasilitasPage from './pages/survei/surveiKepuasanFasilitas';
+import SurveiKepuasanSkripsiPage from './pages/survei/surveiKepuasanSkripsi';
 
 import './index.css';
 
@@ -63,6 +65,8 @@ const App = () => {
           <Route path="informasi/pengumuman" element={<PengumumanPage />} />
           <Route path="informasi/pengumuman/:id" element={<DetailPengumumanPage />} />
           <Route path="registrasi/hotspot" element={<HotspotPage />} />
+           <Route path="survei-kepuasan/fasilitas" element={<SurveiKepuasanFasilitasPage />} />
+          <Route path="survei-kepuasan/skripsi" element={<SurveiKepuasanSkripsiPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
