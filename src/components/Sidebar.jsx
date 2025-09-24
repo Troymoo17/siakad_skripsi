@@ -29,7 +29,7 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
     return (
         <aside
             id="sidebar"
-            className={`bg-white w-64 min-h-screen py-4 px-2 shadow-xl border-r border-gray-100 flex flex-col transition-all duration-300 fixed z-50 inset-y-0 left-0 md:static md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+    className={`bg-white w-64 min-h-screen py-4 px-2 shadow-xl border-r border-gray-100 flex flex-col transition-all duration-300 fixed z-50 inset-y-0 left-0 md:static md:translate-x-0 overflow-y-auto ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
             <div className="flex items-center space-x-2 px-2 pb-4 border-b border-gray-200 mb-4">
                 <img src={logo} alt="Logo Institut Widya Pratama" className="w-16 h-14" />
@@ -40,7 +40,7 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
                 <div id="profile-nama" className="text-xs text-gray-500 mb-1 mt-1">{mahasiswaData?.nama || 'Memuat...'}</div>
                 <div id="profile-nim" className="font-semibold text-blue-900 text-base mb-1">{mahasiswaData?.nim || 'Memuat...'}</div>
             </NavLink>
-            <nav className="flex-1 space-y-1 text-sm px-1">
+            <nav className="flex-1 space-y-1 text-sm px-1 overflow-y-auto">
                 <NavLink to="/dashboard" onClick={handleLinkClick} end className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6"/></svg>
                     <span>Beranda</span>
