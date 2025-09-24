@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/api';
+import Swal from 'sweetalert2';
 import logo from '../assets/logo.png';
 import logoOnly from '../assets/logo_only.png';
 
@@ -14,10 +15,21 @@ const LoginPage = () => {
     const response = await loginUser(nim, password);
     if (response.status === 'success') {
       localStorage.setItem('loggedInUserNim', response.data.nim);
-      alert('Login Berhasil: ' + response.message);
+      Swal.fire({
+        icon: "success",
+        title: "Login Berhasil",
+        showConfirmButton: false,
+        timer: 1000
+      });
       navigate('/dashboard');
     } else {
-      alert('Login Gagal: ' + response.message);
+      Swal.fire({
+        icon: "error",
+        title: "Login Gagal",
+        text: response.message,
+        showConfirmButton: false,
+        timer: 1000
+      });
     }
   };
 
