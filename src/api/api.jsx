@@ -291,3 +291,17 @@ export const submitSurveiKepuasan = async (nim, jenis_survei, jawaban) => {
     const data = await response.json();
     return data;
 };
+export const submitSurveiKepuasanIkadIkas = async (payload) => {
+    const formData = new FormData();
+    formData.append('nim', payload.nim);
+    formData.append('jenis_survei', payload.jenis_survei);
+    formData.append('jawaban', JSON.stringify(payload.answers));
+    formData.append('target_id', payload.target_id);
+
+    const response = await fetch(`${BASE_URL}/survei_kepuasan.php`, {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    return data;
+};

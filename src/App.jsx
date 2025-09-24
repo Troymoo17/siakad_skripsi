@@ -30,6 +30,8 @@ import DetailPengumumanPage from './pages/informasi/detailPengumumanPage';
 import HotspotPage from './pages/registrasi/hotspotPage';
 import SurveiKepuasanFasilitasPage from './pages/survei/surveiKepuasanFasilitas';
 import SurveiKepuasanSkripsiPage from './pages/survei/surveiKepuasanSkripsi';
+import IkadKuesionerPage from './pages/registrasi/ikadKuesionerPage';
+import IkasKuesionerPage from './pages/registrasi/ikasKuesionerPage';
 
 import './index.css';
 
@@ -48,6 +50,8 @@ const App = () => {
           <Route path="ujian-dan-nilai/kartu-hasil-studi" element={<KartuHasilStudiPage />} />
           <Route path="ujian-dan-nilai/daftar-nilai-kumulatif" element={<DaftarNilaiKumulatifPage />} />
           <Route path="registrasi/ikad-ikas" element={<IkadIkasPage />} />
+          <Route path="registrasi/ikad-ikas/ikad/:kode_mk" element={<IkadKuesionerPage />} />
+          <Route path="registrasi/ikad-ikas/ikas/:id_staff" element={<IkasKuesionerPage />} />
           <Route path="registrasi/kurikulum" element={<KurikulumPage />} />
           <Route path="registrasi/krs" element={<KRSPage />} />
           <Route path="registrasi/kmk" element={<KMKPage />} />

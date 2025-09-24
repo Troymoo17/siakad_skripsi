@@ -48,7 +48,7 @@ const IkadIkasPage = () => {
                                     <td className="py-3 px-6 text-center">{item.dosen}</td>
                                     <td className="py-3 px-6 text-center">
                                         {item.status === 'Belum Diisi' ? (
-                                            <Link to={`/dashboard/kuisioner/ikad/${item.kode_mk}`} className="text-blue-600 hover:underline">
+                                            <Link to={`/dashboard/registrasi/ikad-ikas/ikad/${item.kode_mk}`} state={{ name: item.dosen }} className="text-blue-600 hover:underline">
                                                 Detail
                                             </Link>
                                         ) : (
@@ -83,7 +83,7 @@ const IkadIkasPage = () => {
                                     <td className="py-3 px-6">{item.jabatan}</td>
                                     <td className="py-3 px-6 text-center">
                                         {item.status === 'Belum Diisi' ? (
-                                            <Link to={`/dashboard/kuisioner/ikas/${item.id_staff}`} className="text-blue-600 hover:underline">
+                                            <Link to={`/dashboard/registrasi/ikad-ikas/ikas/${item.id_staff}`} state={{ name: item.nama_staf }} className="text-blue-600 hover:underline">
                                                 Detail
                                             </Link>
                                         ) : (
@@ -119,7 +119,7 @@ const IkadIkasPage = () => {
                             </div>
                             <div className="w-full text-center mt-3 pt-3 border-t border-gray-200">
                                 {item.status === 'Belum Diisi' ? (
-                                    <Link to={`/dashboard/kuisioner/ikad/${item.kode_mk}`} className="inline-block text-blue-600 hover:underline text-sm">
+                                    <Link to={`/dashboard/registrasi/ikad-ikas/ikad/${item.kode_mk}`} state={{ name: item.dosen }} className="inline-block text-blue-600 hover:underline text-sm">
                                         Detail
                                     </Link>
                                 ) : (
@@ -144,7 +144,7 @@ const IkadIkasPage = () => {
                             </div>
                             <div className="w-full text-center mt-3 pt-3 border-t border-gray-200">
                                 {item.status === 'Belum Diisi' ? (
-                                    <Link to={`/dashboard/kuisioner/ikas/${item.id_staff}`} className="inline-block text-blue-600 hover:underline text-sm">
+                                    <Link to={`/dashboard/registrasi/ikad-ikas/ikas/${item.id_staff}`} state={{ name: item.nama_staf }} className="inline-block text-blue-600 hover:underline text-sm">
                                         Detail
                                     </Link>
                                 ) : (
