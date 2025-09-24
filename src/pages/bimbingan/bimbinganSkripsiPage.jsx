@@ -4,6 +4,15 @@ import { getBimbinganSkripsiHistory } from '../../api/api';
 const BimbinganSkripsiPage = () => {
     const [historiBimbingan, setHistoriBimbingan] = useState([]);
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -28,7 +37,7 @@ const BimbinganSkripsiPage = () => {
                 <tbody>
                     {historiBimbingan.map((item, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                            <td className="py-3 px-6 whitespace-nowrap">{item.tanggal}</td>
+                            <td className="py-3 px-6 whitespace-nowrap">{formatDateToDMY(item.tanggal)}</td>
                             <td className="py-3 px-6">{item.bab}</td>
                             <td className="py-3 px-6">{item.pembimbing}</td>
                             <td className="py-3 px-6">{item.uraian}</td>
@@ -57,7 +66,7 @@ const BimbinganSkripsiPage = () => {
                     <div className="space-y-2 text-sm text-gray-600">
                         <div className='flex flex-col'>
                             <span className="font-semibold">Tanggal:</span>
-                            <span className="ml-2">{item.tanggal}</span>
+                            <span className="ml-2">{formatDateToDMY(item.tanggal)}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className="font-semibold">Pembimbing:</span>

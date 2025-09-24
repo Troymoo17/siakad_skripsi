@@ -9,6 +9,15 @@ const UploadMagangPage = () => {
         file_dokumen: null,
     });
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -62,7 +71,7 @@ const UploadMagangPage = () => {
                         return (
                             <tr key={index} className="bg-white border-b hover:bg-gray-50">
                                 <td className="py-3 px-6">{item.judul_dokumen}</td>
-                                <td className="py-3 px-6 whitespace-nowrap">{item.tanggal_upload}</td>
+                                <td className="py-3 px-6 whitespace-nowrap">{formatDateToDMY(item.tanggal_upload)}</td>
                                 <td className="py-3 px-6 text-center">
                                     <span className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${statusBadge}`}>{item.status_upload}</span>
                                 </td>
@@ -87,7 +96,7 @@ const UploadMagangPage = () => {
                         <div className="text-sm text-gray-600 space-y-2">
                             <div className="flex justify-between items-center">
                                 <span className="font-semibold">Tanggal Unggah:</span>
-                                <span>{item.tanggal_upload}</span>
+                                <span>{formatDateToDMY(item.tanggal_upload)}</span>
                             </div>
                         </div>
                     </div>

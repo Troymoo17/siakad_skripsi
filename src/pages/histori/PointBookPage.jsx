@@ -4,6 +4,15 @@ import { getPointBookHistory } from '../../api/api';
 const PointBookPage = () => {
     const [pointBookData, setPointBookData] = useState(null);
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -27,7 +36,7 @@ const PointBookPage = () => {
                 <tbody>
                     {pointBookData.data.map((item, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                            <td className="py-3 px-6">{item.tanggal}</td>
+                            <td className="py-3 px-6">{formatDateToDMY(item.tanggal)}</td>
                             <td className="py-3 px-6">{item.nama_kegiatan}</td>
                             <td className="py-3 px-6">{item.poin}</td>
                             <td className="py-3 px-6">{item.keterangan}</td>
@@ -47,7 +56,7 @@ const PointBookPage = () => {
                         <div className="px-2 py-1 text-xs font-semibold text-white rounded-full bg-blue-600">{item.poin} Poin</div>
                     </div>
                     <div className="flex flex-col text-sm text-gray-600">
-                        <p>Tanggal: {item.tanggal}</p>
+                        <p>Tanggal: {formatDateToDMY(item.tanggal)}</p>
                         <p>Keterangan: {item.keterangan}</p>
                     </div>
                 </div>

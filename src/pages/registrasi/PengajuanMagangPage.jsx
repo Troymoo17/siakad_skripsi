@@ -8,6 +8,15 @@ const PengajuanMagangPage = () => {
         jenis_tempat_magang: '', nama_tempat_magang: '', alamat: '', kota_kabupaten_magang: '', baru_ulang: '', rencana_mulai: '', rencana_selesai: ''
     });
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -74,8 +83,8 @@ const PengajuanMagangPage = () => {
                                 <td className="py-3 px-6">{item.nama_tempat_magang}</td>
                                 <td className="py-3 px-6">{item.alamat}</td>
                                 <td className="py-3 px-6 text-center">{item.kota_kabupaten_magang}</td>
-                                <td className="py-3 px-6 text-center">{item.rencana_mulai} sd {item.rencana_selesai}</td>
-                                <td className="py-3 px-6 text-center">{item.tgl_pengajuan}</td>
+                                <td className="py-3 px-6 text-center">{formatDateToDMY(item.rencana_mulai)} sd {formatDateToDMY(item.rencana_selesai)}</td>
+                                <td className="py-3 px-6 text-center">{formatDateToDMY(item.tgl_pengajuan)}</td>
                                 <td className="py-3 px-6 text-center"><span className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${statusBadge}`}>{item.status_magang}</span></td>
                                 <td className="py-3 px-6 text-center">{item.tgl_proses || '-'}</td>
                                 <td className="py-3 px-6">{item.komentar_prodi || '-'}</td>

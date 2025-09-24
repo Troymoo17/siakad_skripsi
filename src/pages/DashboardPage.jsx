@@ -7,6 +7,16 @@ const DashboardPage = () => {
   const [jadwalData, setJadwalData] = useState([]);
   const [pengumumanData, setPengumumanData] = useState([]);
 
+  // Function to format date to d-m-Y
+  const formatDateToDMY = (dateString) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   useEffect(() => {
     const nim = localStorage.getItem('loggedInUserNim');
     if (nim) {
@@ -72,7 +82,7 @@ const DashboardPage = () => {
                 {recentAnnouncements.length > 0 ? (
                     recentAnnouncements.map((item, index) => (
                         <div key={index} className="pb-3 border-b border-gray-200">
-                            <div className="text-xs text-gray-500">{item.tanggal_upload}</div>
+                            <div className="text-xs text-gray-500">{formatDateToDMY(item.tanggal_upload)}</div>
                             <Link to={`/dashboard/informasi/pengumuman/${item.id}`} className="font-medium text-blue-600 hover:text-blue-800">
                                 {item.judul}
                             </Link>

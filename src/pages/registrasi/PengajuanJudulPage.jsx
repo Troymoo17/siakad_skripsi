@@ -8,6 +8,15 @@ const PengajuanJudulPage = () => {
         baru_ulang: 'Baru', judul: '', abstrak: '', jalur: '', sertifikasi: []
     });
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -75,9 +84,9 @@ const PengajuanJudulPage = () => {
                                 <td className="py-3 px-6">{item.judul}</td>
                                 <td className="py-3 px-6">{item.abstrak}</td>
                                 <td className="py-3 px-6">{item.jalur}</td>
-                                <td className="py-3 px-6">{item.tgl_pengajuan}</td>
+                                <td className="py-3 px-6">{formatDateToDMY(item.tgl_pengajuan)}</td>
                                 <td className="py-3 px-6 text-center"><span className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${statusBadgeClass}`}>{item.status}</span></td>
-                                <td className="py-3 px-6">{item.tgl_proses || '-'}</td>
+                                <td className="py-3 px-6">{item.tgl_proses ? formatDateToDMY(item.tgl_proses) : '-'}</td>
                                 <td className="py-3 px-6">{item.komentar_prodi || '-'}</td>
                                 <td className="py-3 px-6 text-center">{cetakFormLink}</td>
                             </tr>

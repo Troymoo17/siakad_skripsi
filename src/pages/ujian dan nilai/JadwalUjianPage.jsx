@@ -4,6 +4,15 @@ import { getJadwalUjian } from '../../api/api';
 const JadwalUjianPage = () => {
     const [jadwalUjian, setJadwalUjian] = useState(null);
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -26,7 +35,7 @@ const JadwalUjianPage = () => {
                         <div className="text-sm text-gray-600 space-y-1">
                             <p className="flex justify-between items-center">
                                 <span className="font-semibold">Tanggal:</span>
-                                <span>{item.tanggal}</span>
+                                <span>{formatDateToDMY(item.tanggal)}</span>
                             </p>
                             <p className="flex justify-between items-center">
                                 <span className="font-semibold">Hari:</span>
@@ -75,7 +84,7 @@ const JadwalUjianPage = () => {
                         <div className="text-gray-600 space-y-1 text-sm">
                             <p className="flex justify-between items-center">
                                 <span className="font-semibold">Tanggal:</span>
-                                <span>{item.tanggal}, {item.hari}</span>
+                                <span>{formatDateToDMY(item.tanggal)}, {item.hari}</span>
                             </p>
                             <p className="flex justify-between items-center">
                                 <span className="font-semibold">Waktu:</span>

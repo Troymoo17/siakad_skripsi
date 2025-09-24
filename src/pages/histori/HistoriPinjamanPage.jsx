@@ -4,6 +4,15 @@ import { getPinjamanHistory } from '../../api/api';
 const HistoriPinjamanPage = () => {
     const [pinjamanData, setPinjamanData] = useState(null);
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -27,8 +36,8 @@ const HistoriPinjamanPage = () => {
                 <tbody>
                     {pinjamanData.data.map((item, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                            <td className="py-3 px-6">{item.tanggal_pinjam}</td>
-                            <td className="py-3 px-6">{item.tanggal_kembali || '-'}</td>
+                            <td className="py-3 px-6">{formatDateToDMY(item.tanggal_pinjam)}</td>
+                            <td className="py-3 px-6">{formatDateToDMY(item.tanggal_kembali) || '-'}</td>
                             <td className="py-3 px-6 text-center">{item.nama_buku}</td>
                             <td className="py-3 px-6 text-center">{item.status_pinjaman}</td>
                         </tr>
@@ -49,8 +58,8 @@ const HistoriPinjamanPage = () => {
                             <div className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${statusBadgeClass}`}>{item.status_pinjaman}</div>
                         </div>
                         <div className="flex flex-col text-sm text-gray-600">
-                            <p>Tanggal Pinjam: {item.tanggal_pinjam}</p>
-                            <p>Tanggal Kembali: {item.tanggal_kembali || 'Belum kembali'}</p>
+                            <p>Tanggal Pinjam: {formatDateToDMY(item.tanggal_pinjam)}</p>
+                            <p>Tanggal Kembali: {formatDateToDMY(item.tanggal_kembali) || 'Belum kembali'}</p>
                         </div>
                     </div>
                 );

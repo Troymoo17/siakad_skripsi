@@ -5,6 +5,15 @@ const PembayaranPage = () => {
     const [pembayaranData, setPembayaranData] = useState(null);
     const [selectedSemesterIndex, setSelectedSemesterIndex] = useState(0);
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -47,7 +56,7 @@ const PembayaranPage = () => {
                     </tr>
                     {currentSemesterData?.pembayaran?.map((item, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                            <td className="py-3 px-6 whitespace-nowrap">Pembayaran ({item.tanggal})</td>
+                            <td className="py-3 px-6 whitespace-nowrap">Pembayaran ({formatDateToDMY(item.tanggal)})</td>
                             <td className="py-3 px-6"></td>
                             <td className="py-3 px-6 text-center">{formatRupiah(item.nominal)}</td>
                         </tr>
@@ -88,7 +97,7 @@ const PembayaranPage = () => {
                 {currentSemesterData?.pembayaran?.length > 0 ? (
                     currentSemesterData.pembayaran.map((item, index) => (
                         <div key={index} className="flex justify-between items-center text-sm">
-                            <p className="text-gray-600">Pembayaran ({item.tanggal})</p>
+                            <p className="text-gray-600">Pembayaran ({formatDateToDMY(item.tanggal)})</p>
                             <span className="font-semibold text-green-600">{formatRupiah(item.nominal)}</span>
                         </div>
                     ))

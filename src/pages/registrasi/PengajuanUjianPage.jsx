@@ -24,6 +24,15 @@ const PengajuanUjianPage = () => {
         kps: ''
     });
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -115,7 +124,7 @@ const PengajuanUjianPage = () => {
                                     <td className="py-3 px-6">{item.judul_skripsi}</td>
                                     <td className="py-3 px-6 whitespace-nowrap">{item.pembimbing1}</td>
                                     <td className="py-3 px-6 whitespace-nowrap">{item.pembimbing2 || '-'}</td>
-                                    <td className="py-3 px-6 whitespace-nowrap">{item.tanggal_pengajuan}</td>
+                                    <td className="py-3 px-6 whitespace-nowrap">{formatDateToDMY(item.tanggal_pengajuan)}</td>
                                     <td className="py-3 px-6 text-center"><span className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${statusBadge}`}>{item.status}</span></td>
                                     <td className="py-3 px-6">{item.keterangan || '-'}</td>
                                 </tr>
@@ -153,7 +162,7 @@ const PengajuanUjianPage = () => {
                                 </p>
                                 <p className="flex justify-between items-center">
                                     <span className="font-semibold">Tgl. Pengajuan:</span>
-                                    <span>{item.tanggal_pengajuan}</span>
+                                    <span>{formatDateToDMY(item.tanggal_pengajuan)}</span>
                                 </p>
                                 <p className="flex justify-between items-center">
                                     <span className="font-semibold">Keterangan:</span>

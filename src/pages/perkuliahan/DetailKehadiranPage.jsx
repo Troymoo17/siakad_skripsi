@@ -10,6 +10,15 @@ const DetailKehadiranPage = () => {
     const [dosenPengajar, setDosenPengajar] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -24,7 +33,6 @@ const DetailKehadiranPage = () => {
         fetchData();
     }, [kode_mk]);
 
-    // Helper function untuk menentukan warna status
     const getStatusClass = (status) => {
         switch (status) {
             case 'Hadir':
@@ -74,7 +82,7 @@ const DetailKehadiranPage = () => {
                                             {item.pertemuan}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {item.tanggal}
+                                            {formatDateToDMY(item.tanggal)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-white ${getStatusClass(item.status)}`}>
@@ -91,7 +99,7 @@ const DetailKehadiranPage = () => {
                         {detailKehadiran.map(item => (
                             <div key={item.pertemuan} className="bg-gray-50 p-4 rounded-md shadow-sm">
                                 <h3 className="font-bold text-base text-gray-800">Pertemuan {item.pertemuan}</h3>
-                                <p className="text-xs text-gray-500 mt-1">Tanggal: {item.tanggal}</p>
+                                <p className="text-xs text-gray-500 mt-1">Tanggal: {formatDateToDMY(item.tanggal)}</p>
                                 <div className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-white ${getStatusClass(item.status)}`}>
                                     {item.status === 'Tidak Hadir' ? 'Alfa' : item.status}
                                 </div>

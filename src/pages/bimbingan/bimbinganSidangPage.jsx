@@ -4,6 +4,16 @@ import { getBimbinganSidangResult } from '../../api/api';
 const BimbinganSidangPage = () => {
     const [sidangData, setSidangData] = useState(null);
 
+    // Function to format date to d-m-Y
+    const formatDateToDMY = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
@@ -28,7 +38,7 @@ const BimbinganSidangPage = () => {
                     {sidangData.map((item, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50">
                             <td className="py-3 px-6">{item.judul_skripsi}</td>
-                            <td className="py-3 px-6 whitespace-nowrap">{item.tanggal_sidang}</td>
+                            <td className="py-3 px-6 whitespace-nowrap">{formatDateToDMY(item.tanggal_sidang)}</td>
                             <td className="py-3 px-6 text-center font-bold text-lg">{item.nilai}</td>
                             <td className="py-3 px-6">{item.revisi || '-'}</td>
                         </tr>
@@ -49,7 +59,7 @@ const BimbinganSidangPage = () => {
                     <div className="text-sm text-gray-600 space-y-1">
                         <p className="flex justify-between items-center">
                             <span className="font-semibold">Tanggal Sidang:</span>
-                            <span>{item.tanggal_sidang}</span>
+                            <span>{formatDateToDMY(item.tanggal_sidang)}</span>
                         </p>
                         <p className="flex justify-between items-center">
                             <span className="font-semibold">Revisi:</span>
