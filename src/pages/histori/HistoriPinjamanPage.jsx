@@ -70,11 +70,11 @@ const HistoriPinjamanPage = () => {
     return (
         <main className="flex-1 p-4 md:p-6 lg:p-8">
             <header className="flex justify-between items-center mb-6">
-                <h1 className="text-xl md:text-2xl font-bold text-gray-800">Histori Pinjaman</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-gray-800">Histori Pinjaman Buku</h1>
             </header>
             <div id="pinjaman-content-container" className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="p-4 md:p-6 border-b border-gray-200">
-                    <h2 className="font-bold text-lg">Daftar Pinjaman</h2>
+                    <h2 className="font-bold text-lg">Daftar Pinjaman Buku</h2>
                 </div>
                 <div id="pinjaman-list-container" className="text-center py-4 text-gray-500">
                     {pinjamanData ? (

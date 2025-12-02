@@ -17,7 +17,22 @@ const KurikulumPage = () => {
         <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4">
             {kurikulumData.map((item, index) => (
                 <div key={index} className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-                    <h3 className="font-bold text-lg text-gray-800 border-b pb-2 mb-2">{item.nama_mk}</h3>
+                    
+                    {/* START: Perubahan untuk Desktop - Status dipindahkan ke atas */}
+                    <div className="flex justify-between items-center border-b pb-2 mb-2">
+                        <h3 className="font-bold text-lg text-gray-800">{item.nama_mk}</h3>
+                        <span className={
+                            `text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap 
+                            ${item.status === 'Wajib' 
+                                ? 'text-blue-600 bg-blue-100' 
+                                : 'text-green-600 bg-green-100'
+                            }`
+                        }>
+                            {item.status}
+                        </span>
+                    </div>
+                    {/* END: Perubahan untuk Desktop */}
+                    
                     <div className="text-sm text-gray-600 space-y-1">
                         <p className="flex justify-between items-center">
                             <span className="font-semibold">Kode Matkul:</span>
@@ -31,6 +46,7 @@ const KurikulumPage = () => {
                             <span className="font-semibold">Grade Min:</span>
                             <span>{item.grade_min}</span>
                         </p>
+                        {/* Status (yang sebelumnya ada di sini) kini sudah dipindahkan ke atas */}
                     </div>
                 </div>
             ))}
@@ -41,8 +57,17 @@ const KurikulumPage = () => {
         <div className="p-4 space-y-4 md:hidden">
             {kurikulumData.map((item, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
-                    <div className="border-b pb-2 mb-2">
+                    <div className="border-b pb-2 mb-2 flex justify-between items-start">
                         <h3 className="font-bold text-lg text-gray-800">{item.nama_mk}</h3>
+                        <span className={
+                            `text-xs font-bold px-2 py-1 rounded-full whitespace-nowrap 
+                            ${item.status === 'Wajib' 
+                                ? 'text-blue-600 bg-blue-100' 
+                                : 'text-green-600 bg-green-100'
+                            }`
+                        }>
+                            {item.status}
+                        </span>
                     </div>
                     <div className="text-sm text-gray-500 space-y-1">
                         <p className="text-xs text-gray-500">Kode: {item.kode_mk}</p>

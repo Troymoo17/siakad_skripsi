@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import DashboardLayout from "./components/dashboardLayout";
+import DashboardLayout from "./components/DashboardLayout";
 import DashboardPage from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import JadwalKuliahPage from './pages/perkuliahan/JadwalKuliahPage';
@@ -20,7 +20,7 @@ import PengajuanMagangPage from './pages/registrasi/PengajuanMagangPage';
 import PengajuanJudulPage from './pages/registrasi/PengajuanJudulPage';
 import PengajuanUjianPage from './pages/registrasi/PengajuanUjianPage';
 import IkadIkasPage from './pages/registrasi/ikad_ikasPage';
-import BimbinganProposalPage from './pages/bimbingan/BimbinganProposalPage';
+import BimbinganProposalPage from './pages/bimbingan/bimbinganProposalPage';
 import BimbinganSkripsiPage from './pages/bimbingan/BimbinganSkripsiPage';
 import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage';
 import DownloadPage from './pages/download/downloadPage';

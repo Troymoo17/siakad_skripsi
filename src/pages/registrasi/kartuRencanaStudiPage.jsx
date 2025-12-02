@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'; // <-- Tambahkan import SweetAlert2
 import { getKRSData, submitKRS, getMahasiswaData } from '../../api/api';
 
 const KRSPage = () => {
@@ -11,10 +12,13 @@ const KRSPage = () => {
         const fetchData = async () => {
             const mhsData = await getMahasiswaData(nim);
             setMahasiswaData(mhsData);
-            const data = await getKRSData(nim, mhsData?.semester_sekarang);
-            setKrsData(data);
-            if (data?.krs_terisi) {
-                setSelectedCourses(data.krs_terisi);
+            // Pastikan mhsData tersedia sebelum memanggil getKRSData
+            if (mhsData?.semester_sekarang) {
+                const data = await getKRSData(nim, mhsData.semester_sekarang);
+                setKrsData(data);
+                if (data?.krs_terisi) {
+                    setSelectedCourses(data.krs_terisi);
+                }
             }
         };
         fetchData();
@@ -30,16 +34,40 @@ const KRSPage = () => {
         e.preventDefault();
         const nim = localStorage.getItem('loggedInUserNim');
         const semester = mahasiswaData?.semester_sekarang;
-        if (!nim || !semester) return;
+        if (!nim || !semester) {
+            Swal.fire({
+                icon: "error",
+                title: "Gagal",
+                text: "Data mahasiswa atau semester tidak ditemukan.",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            return;
+        }
 
         const success = await submitKRS(nim, semester, selectedCourses);
+        
+        // START: Perubahan Alert menjadi SweetAlert2
         if (success) {
-            alert('KRS berhasil disimpan!');
+            Swal.fire({
+                icon: "success",
+                title: "KRS Berhasil Disimpan",
+                showConfirmButton: false,
+                timer: 1500 // Timer dinaikkan sedikit agar pesan lebih terbaca
+            });
+            // Memuat ulang data KRS setelah berhasil disimpan
             const updatedData = await getKRSData(nim, semester);
             setKrsData(updatedData);
         } else {
-            alert('Gagal menyimpan KRS. Silakan coba lagi.');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal Menyimpan KRS",
+                text: "Terjadi kesalahan saat menyimpan data. Silakan coba lagi.",
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
+        // END: Perubahan Alert menjadi SweetAlert2
     };
 
     const renderDesktopCards = () => (
@@ -80,6 +108,18 @@ const KRSPage = () => {
         </div>
     );
 
+    // Render logic utama (tidak diubah)
+    if (!krsData || !mahasiswaData) {
+        return (
+            <main className="flex-1 p-4 md:p-6 lg:p-8">
+                <div className="text-center py-10 text-gray-600">
+                    Memuat data mahasiswa dan KRS...
+                </div>
+            </main>
+        );
+    }
+    
+    // ... (rest of the return statement)
     return (
         <main className="flex-1 p-4 md:p-6 lg:p-8">
             <header className="flex justify-between items-center mb-6">
@@ -103,7 +143,7 @@ const KRSPage = () => {
                                 </div>
                             </>
                         ) : (
-                            <div className="text-center py-4 text-gray-500">Memuat daftar mata kuliah...</div>
+                            <div className="text-center py-4 text-gray-500">Tidak ada mata kuliah yang tersedia untuk semester ini.</div>
                         )}
                     </div>
                 </form>

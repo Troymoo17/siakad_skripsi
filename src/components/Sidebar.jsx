@@ -85,7 +85,7 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen }) => {
                     <svg className={`w-4 h-4 ml-auto transform transition-transform duration-200 ${isHistoriOpen ? 'rotate-90' : 'rotate-0'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                 </div>
                 <div className={`submenu ${isHistoriOpen ? 'block' : 'hidden'} space-y-1 pl-6 pt-1`}>
-                    <NavLink to="/dashboard/histori/histori_pinjaman" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Histori Pinjaman</span></NavLink>
+                    <NavLink to="/dashboard/histori/histori_pinjaman" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Histori Pinjaman Buku</span></NavLink>
                     <NavLink to="/dashboard/histori/pointbook" onClick={handleLinkClick} className={({ isActive }) => `flex items-center space-x-2 py-2 px-3 rounded-lg transition duration-150 ${isActive ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}><span>Point Book</span></NavLink>
                 </div>
 
