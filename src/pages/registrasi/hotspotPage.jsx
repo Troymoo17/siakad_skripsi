@@ -31,32 +31,76 @@ const HotspotPage = () => {
     };
 
     return (
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
-            <h1 className="text-xl md:text-2xl font-bold mb-6 text-gray-900">Pendaftaran Hotspot</h1>
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                    <div>
-                        <label className="block text-gray-700 text-sm font-semibold mb-1">Username:</label>
-                        <input type="text" value={mahasiswaData?.nim || 'Memuat...'} readOnly className="mt-1 block w-full rounded-md bg-gray-100 border-gray-300 shadow-sm sm:text-sm p-2"/>
+        <main className="flex-1 p-4 md:p-8 lg:p-10 bg-gray-50 min-h-screen">
+            <header className="mb-8">
+                <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tighter">Pendaftaran Hotspot</h1>
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em]">Akses Internet Area Kampus</p>
+            </header>
+
+            <div className="w-full space-y-8">
+                {/* Form Section */}
+                <section className="bg-white p-8 rounded-xl border border-gray-300 shadow-sm">
+                    <div className="flex items-center gap-2 mb-6 border-b pb-3">
+                        <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
+                        <h2 className="text-gray-800 font-bold text-sm tracking-widest uppercase">Konfigurasi Akun Hotspot</h2>
                     </div>
-                    <div>
-                        <label className="block text-gray-700 text-sm font-semibold mb-1" htmlFor="password">Password:</label>
-                        <input type="password" id="password" value={password} onChange={handlePasswordChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2" required/>
-                    </div>
-                    <div className="flex justify-start pt-2">
-                        <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
-                <div className="mt-6 pt-4 border-t border-gray-200 text-sm text-gray-600">
-                    <h3 className="font-semibold mb-2">Keterangan:</h3>
-                    <ol className="list-decimal list-inside space-y-1">
-                        <li>Silakan login dengan Username dan password.</li>
-                        <li>Username adalah nim Anda dan passwordnya sesuai yang Anda input.</li>
-                        <li>Satu User dapat digunakan untuk 2 perangkat (maksimal).</li>
+
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Username (NIM)</label>
+                                <input 
+                                    type="text" 
+                                    value={mahasiswaData?.nim || 'Memuat...'} 
+                                    readOnly 
+                                    className="w-full p-3 bg-gray-100 border border-gray-200 rounded-lg text-sm font-bold text-gray-500 outline-none cursor-not-allowed"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest" htmlFor="password">Password</label>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    value={password} 
+                                    onChange={handlePasswordChange} 
+                                    className="w-full p-3 border border-gray-300 rounded-lg text-sm font-bold focus:border-blue-700 outline-none transition-all" 
+                                    placeholder="MASUKKAN PASSWORD"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex justify-start pt-4">
+                            <button 
+                                type="submit" 
+                                className="w-full md:w-auto bg-blue-700 text-white font-black px-12 py-3 rounded-xl hover:bg-blue-800 transition-all uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-blue-100"
+                            >
+                                Simpan Password
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                {/* Keterangan Section */}
+                <section className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm border-l-4 border-l-blue-700">
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase mb-4 tracking-widest flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Informasi & Keterangan
+                    </h3>
+                    <ol className="list-decimal list-inside space-y-3">
+                        <li className="text-xs font-bold text-gray-600 uppercase leading-relaxed tracking-wide">
+                            Silakan login dengan Username dan password.
+                        </li>
+                        <li className="text-xs font-bold text-gray-600 uppercase leading-relaxed tracking-wide">
+                            Username adalah NIM Anda dan passwordnya sesuai yang Anda input.
+                        </li>
+                        <li className="text-xs font-bold text-gray-600 uppercase leading-relaxed tracking-wide">
+                            Satu User dapat digunakan untuk 2 perangkat (maksimal).
+                        </li>
                     </ol>
-                </div>
+                </section>
             </div>
         </main>
     );

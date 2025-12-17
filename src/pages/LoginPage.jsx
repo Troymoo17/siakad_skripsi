@@ -74,7 +74,7 @@ const LoginPage = () => {
               </div>
               <button type="submit" className="w-full bg-blue-700 text-white font-semibold py-2 rounded-lg hover:bg-blue-800 transition text-sm sm:text-base mb-2">Masuk</button>
               <div className="text-center">
-                <a href="/lupa_sandi.html" className="text-xs sm:text-sm text-blue-500 hover:underline">Lupa kata sandi?</a>
+                <a href="/lupa-sandi" className="text-xs sm:text-sm text-blue-500 hover:underline">Lupa kata sandi?</a>
               </div>
             </form>
           </div>

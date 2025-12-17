@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import Navbar from './Navbar';
 import { getMahasiswaData } from '../api/api';
 
 const DashboardLayout = () => {
   const [mahasiswaData, setMahasiswaData] = useState(null);
   const navigate = useNavigate();
 
-  //state untuk mengelola sidebar di mobile
+  // state untuk mobile drawer
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  // state untuk desktop collapse (mini sidebar)
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
     const nim = localStorage.getItem('loggedInUserNim');
@@ -23,28 +26,37 @@ const DashboardLayout = () => {
     fetchMahasiswa();
   }, [navigate]);
 
-  // membuka/menutup sidebar
   const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
+    if (window.innerWidth < 768) {
+      setSidebarOpen(!isSidebarOpen); // Di mobile: Buka/Tutup drawer
+    } else {
+      setIsCollapsed(!isCollapsed); // Di desktop: Ciutkan/Lebarkan
+    }
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col md:flex-row">
-      <button
-        id="toggleSidebar"
-        className="md:hidden block fixed top-3 left-3 z-50 p-2 bg-white rounded shadow-lg border border-gray-100"
-        aria-label="Buka Menu"
-        onClick={toggleSidebar}
-      >
-        <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+    <div className="bg-gray-50 min-h-screen flex">
+      {/* Overlay untuk mobile saat sidebar terbuka */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 z-40 md:hidden" 
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      <Sidebar mahasiswaData={mahasiswaData} isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar 
+        mahasiswaData={mahasiswaData} 
+        isSidebarOpen={isSidebarOpen} 
+        setSidebarOpen={setSidebarOpen} 
+        isCollapsed={isCollapsed}
+      />
       
-      <div id="main-content-container" className="flex-1">
-        <Outlet />
+      <div className="flex-1 flex flex-col min-w-0">
+        <Navbar toggleSidebar={toggleSidebar} mahasiswaData={mahasiswaData} />
+        
+        <main className="flex-1 overflow-y-auto">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

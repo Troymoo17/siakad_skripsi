@@ -47,29 +47,34 @@ const DashboardPage = () => {
   const recentAnnouncements = pengumumanData.slice(0, 3);
 
   const renderKinerjaPembelajaran = () => (
-    <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">Kinerja Pembelajaran</h2>
-      <div className="flex flex-col items-center space-y-4">
-        <div className="relative w-40 h-40 flex items-center justify-center flex-shrink-0">
-          <div className="donut-chart" style={{ background: `conic-gradient(#0b66a5 0% ${ipkPercentage}%, #f0b341 ${ipkPercentage}% 100%)` }}></div>
-          <div className="absolute flex flex-col items-center justify-center">
-            <span className="text-4xl font-bold text-blue-900">{ipkData?.ipk || '...'}</span>
-            <span className="text-xs text-gray-500">/ 4.00</span>
+    <section className="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-200">
+      <h2 className="text-base md:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span className="w-1 h-5 bg-blue-600 rounded-full"></span>
+        Kinerja Pembelajaran
+      </h2>
+      <div className="flex flex-col items-center">
+        <div className="relative w-36 h-36 md:w-40 md:h-40 flex items-center justify-center flex-shrink-0">
+          <div className="donut-chart" style={{ background: `conic-gradient(#0b66a5 0% ${ipkPercentage}%, #e2e8f0 ${ipkPercentage}% 100%)` }}></div>
+          <div className="absolute flex flex-col items-center justify-center bg-white w-[80%] h-[80%] rounded-full shadow-inner">
+            <span className="text-3xl md:text-4xl font-black text-blue-900">{ipkData?.ipk || '...'}</span>
+            <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">IPK Terakhir</span>
           </div>
         </div>
-        <br />
-        <div className="flex flex-col md:flex-row justify-around w-full gap-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm flex-1 text-center border border-gray-300">
-            <div className="text-xs text-gray-500">Semester</div>
-            <div className="text-2xl font-bold text-gray-800">{ipkData?.ips_per_semester?.length || '...'}</div>
+        
+        <div className="grid grid-cols-3 w-full gap-2 mt-6">
+          <div className="bg-gray-50 p-3 rounded-lg text-center border border-gray-100">
+            <div className="text-[10px] uppercase font-bold text-gray-400">Smt</div>
+            <div className="text-lg font-bold text-gray-800">{ipkData?.ips_per_semester?.length || '...'}</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm flex-1 text-center border border-gray-300">
-            <div className="text-xs text-gray-500">Tahun Akademik</div>
-            <div className="text-2xl font-bold text-gray-800">{lastSemester?.tahun_akademik || '...'}</div>
+          <div className="bg-gray-50 p-3 rounded-lg text-center border border-gray-100">
+            <div className="text-[10px] uppercase font-bold text-gray-400">SKS</div>
+            <div className="text-lg font-bold text-gray-800">{totalSks || '...'}</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm flex-1 text-center border border-gray-300">
-            <div className="text-xs text-gray-500">SKS</div>
-            <div className="text-2xl font-bold text-gray-800">{totalSks || '...'}</div>
+          <div className="bg-gray-50 p-3 rounded-lg text-center border border-gray-100">
+            <div className="text-[10px] uppercase font-bold text-gray-400">Tahun</div>
+            <div className="text-sm font-bold text-gray-800 leading-tight flex items-center justify-center h-full">
+               {lastSemester?.tahun_akademik?.split('/')[0] || '...'}
+            </div>
           </div>
         </div>
       </div>
@@ -77,59 +82,70 @@ const DashboardPage = () => {
   );
 
   const renderPengumuman = () => (
-    <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
-      <div className="flex justify-between items-start mb-4">
-        <h2 className="text-lg font-semibold text-gray-700">Pengumuman</h2>
-        <Link to="/dashboard/informasi/pengumuman" className="text-xs text-blue-600 hover:text-blue-800 ml-4">Pengumuman tiga bulan terakhir</Link>
+    <section className="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-200">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-base md:text-lg font-bold text-gray-800 flex items-center gap-2">
+            <span className="w-1 h-5 bg-orange-500 rounded-full"></span>
+            Pengumuman
+        </h2>
+        <Link to="/dashboard/informasi/pengumuman" className="text-[11px] font-bold text-blue-600 hover:underline uppercase tracking-tighter">Lihat Semua</Link>
       </div>
-      <div className="space-y-4 text-sm">
+      <div className="space-y-3">
           {recentAnnouncements.length > 0 ? (
               recentAnnouncements.map((item, index) => (
-                  <div key={index} className="pb-3 border-b border-gray-200 last:border-b-0">
+                  <div key={index} className="group pb-3 border-b border-gray-100 last:border-b-0 last:pb-0">
                       <div className="flex flex-col">
-                        <div className="text-xs text-gray-500 mb-1">{formatDateToDMY(item.tanggal_upload)}</div>
-                        <Link to={`/dashboard/informasi/pengumuman/${item.id}`} className="font-medium text-blue-600 hover:text-blue-800 break-words">
+                        <span className="text-[10px] font-bold text-gray-400 mb-0.5">{formatDateToDMY(item.tanggal_upload)}</span>
+                        <Link to={`/dashboard/informasi/pengumuman/${item.id}`} className="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors leading-snug">
                             {item.judul}
                         </Link>
                       </div>
                   </div>
               ))
           ) : (
-              <p className="text-sm text-gray-500 italic">Tidak ada pengumuman dalam tiga bulan terakhir.</p>
+              <p className="text-sm text-gray-500 italic">Tidak ada pengumuman.</p>
           )}
       </div>
     </section>
   );
 
   const renderJadwalKuliah = () => (
-    <section className="bg-white p-6 rounded-lg shadow-md mt-6 md:col-span-2 border border-gray-300">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">Jadwal Kuliah Hari Ini</h2>
-      <div id="jadwal-hari-ini-container">
+    <section className="bg-white p-5 md:p-6 rounded-xl shadow-sm md:col-span-2 border border-gray-200">
+      <h2 className="text-base md:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span className="w-1 h-5 bg-green-500 rounded-full"></span>
+        Jadwal Hari Ini
+      </h2>
+      <div className="space-y-3">
         {jadwalData.length > 0 ? (
-          <div className="space-y-4">
-            {jadwalData.map((item, index) => (
-              <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
-                <h3 className="font-bold text-base text-gray-800">{item.matkul}</h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  {item.jam_mulai.substring(0, 5)} - {item.jam_selesai.substring(0, 5)} | Ruang: {item.ruang} | Dosen: {item.dosen}
-                </p>
+            jadwalData.map((item, index) => (
+              <div key={index} className="p-4 border-l-4 border-blue-600 bg-blue-50/30 rounded-r-lg shadow-sm">
+                <h3 className="font-bold text-sm md:text-base text-blue-900 line-clamp-1">{item.matkul}</h3>
+                <div className="flex items-center gap-2 mt-2 text-[11px] text-gray-600 font-medium">
+                  <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">{item.jam_mulai.substring(0, 5)}</span>
+                  <span className="text-gray-300">|</span>
+                  <span className="truncate">Ruang {item.ruang}</span>
+                  <span className="text-gray-300">|</span>
+                  <span className="truncate">{item.dosen}</span>
+                </div>
               </div>
-            ))}
-          </div>
+            ))
         ) : (
-          <p className="text-sm text-gray-500 italic">Tidak ada jadwal kuliah untuk hari ini.</p>
+          <div className="text-center py-6 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+            <p className="text-xs text-gray-500 font-medium">Tidak ada jadwal kuliah hari ini.</p>
+          </div>
         )}
       </div>
     </section>
   );
 
   const renderQuote = () => (
-    <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-700">QUOTE OF THE DAY</h2>
+    <section className="bg-gradient-to-br from-blue-600 to-blue-800 p-5 rounded-xl shadow-lg text-white">
+      <div className="flex items-center gap-2 mb-3 opacity-80">
+        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C14.9124 8 14.017 7.10457 14.017 6V5C14.017 3.89543 14.9124 3 16.017 3H19.017C21.2261 3 23.017 4.79086 23.017 7V15C23.017 18.866 19.883 22 16.017 22H14.017V21ZM2.01693 21L2.01693 18C2.01693 16.8954 2.91236 16 4.01693 16H7.01693C7.56921 16 8.01693 15.5523 8.01693 15V9C8.01693 8.44772 7.56921 8 7.01693 8H4.01693C2.91236 8 2.01693 7.10457 2.01693 6V5C2.01693 3.89543 2.91236 3 4.01693 3H7.01693C9.22607 3 11.0169 4.79086 11.0169 7V15C11.0169 18.866 7.88297 22 4.01693 22H2.01693V21Z" /></svg>
+        <h2 className="text-[10px] font-bold uppercase tracking-widest">Quote of the Day</h2>
       </div>
-      <span className="font-bold text-blue-700">Jika harimu buruk maka tetaplah buruk.</span>
-      <span className="text-sm text-gray-500">-anomali bumi</span>
+      <p className="text-sm font-medium italic leading-relaxed">"Jika harimu buruk maka tetaplah buruk."</p>
+      <p className="text-[10px] mt-2 font-bold opacity-70">— anomali bumi</p>
     </section>
   );
 
@@ -145,19 +161,16 @@ const DashboardPage = () => {
   );
 
   const renderMobileView = () => (
-    <div className="md:hidden space-y-6">
+    <div className="md:hidden flex flex-col gap-5">
+      {renderJadwalKuliah()}
       {renderKinerjaPembelajaran()}
       {renderPengumuman()}
-      {renderJadwalKuliah()}
       {renderQuote()}
     </div>
   );
 
   return (
-    <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8">
-      <header className="flex justify-between items-center mb-6">
-        <h1 className="text-xl md:text-1xl font-bold text-gray-800">Selamat Datang Di Sistem Informasi Akademik Institut Widya Pratama Pekalongan</h1>
-      </header>
+    <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8 bg-gray-50">
       {isMobile ? renderMobileView() : renderDesktopView()}
     </main>
   );

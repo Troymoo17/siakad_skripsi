@@ -32,6 +32,7 @@ import SurveiKepuasanFasilitasPage from './pages/survei/surveiKepuasanFasilitas'
 import SurveiKepuasanSkripsiPage from './pages/survei/surveiKepuasanSkripsi';
 import IkadKuesionerPage from './pages/registrasi/ikadKuesionerPage';
 import IkasKuesionerPage from './pages/registrasi/ikasKuesionerPage';
+import LupaSandiPage from './pages/LupaSandi';
 
 import './index.css';
 
@@ -71,6 +72,7 @@ const App = () => {
           <Route path="registrasi/hotspot" element={<HotspotPage />} />
            <Route path="survei-kepuasan/fasilitas" element={<SurveiKepuasanFasilitasPage />} />
           <Route path="survei-kepuasan/skripsi" element={<SurveiKepuasanSkripsiPage />} />
+          <Route path="lupa-sandi" element={<LupaSandiPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

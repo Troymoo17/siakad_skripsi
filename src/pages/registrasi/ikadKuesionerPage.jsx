@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import { submitSurveiKepuasanIkadIkas } from '../../api/api';
+import Swal from 'sweetalert2';
 
 const IkadKuesionerPage = () => {
     const { kode_mk } = useParams();
@@ -34,7 +35,7 @@ const IkadKuesionerPage = () => {
         e.preventDefault();
         const nim = localStorage.getItem('loggedInUserNim');
         if (!nim) {
-            alert('NIM tidak ditemukan. Harap login kembali.');
+            Swal.fire('Error', 'NIM tidak ditemukan. Harap login kembali.', 'error');
             return;
         }
 
@@ -47,48 +48,87 @@ const IkadKuesionerPage = () => {
 
         const response = await submitSurveiKepuasanIkadIkas(payload);
         if (response.status === 'success') {
-            alert(response.message);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: response.message,
+                showConfirmButton: false,
+                timer: 1500
+            });
             navigate('/dashboard/registrasi/ikad-ikas');
         } else {
-            alert('Gagal mengirim kuesioner: ' + response.message);
+            Swal.fire('Gagal', response.message, 'error');
         }
     };
 
     return (
-        <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
-            <h1 className="text-xl md:text-2xl font-bold mb-2 text-gray-900">Kuesioner IKAD</h1>
-            <h2 className="text-lg md:text-xl font-medium mb-6 text-gray-700">Penilaian untuk Dosen: {name}</h2>
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <form className="space-y-6" onSubmit={handleSubmit}>
+        <main className="flex-1 p-4 md:p-8 lg:p-10 bg-gray-50 min-h-screen">
+            <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tighter">Kuesioner IKAD</h1>
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em]">Penilaian Kinerja Dosen Pengampu</p>
+                </div>
+                
+                {/* Tombol Kembali */}
+                <Link 
+                    to="/dashboard/registrasi/ikad-ikas"
+                    className="flex items-center gap-2 w-fit bg-white border border-gray-300 px-4 py-2 rounded-xl text-gray-600 hover:text-blue-700 hover:border-blue-700 transition-all shadow-sm group"
+                >
+                    <svg className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span className="text-[10px] font-black uppercase tracking-widest">Kembali</span>
+                </Link>
+            </header>
+
+            <div className="w-full bg-white p-6 rounded-xl border border-gray-300 shadow-sm mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
+                    <h2 className="text-gray-800 font-bold text-sm tracking-widest uppercase">Detail Objek Penilaian</h2>
+                </div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-tight">Nama Dosen / Mata Kuliah:</p>
+                <p className="text-lg font-black text-blue-700 uppercase">{name}</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="w-full space-y-6">
+                <div className="grid grid-cols-1 gap-4">
                     {questions.map((question, index) => (
-                        <div key={index} className="border-b pb-4">
-                            <p className="font-semibold text-gray-800 mb-2">{question}</p>
-                            <div className="space-y-2">
+                        <div key={index} className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm transition-all hover:border-blue-300">
+                            <p className="font-bold text-gray-800 text-sm mb-4 leading-relaxed">{question}</p>
+                            <div className="flex flex-wrap gap-4 md:gap-8">
                                 {options.map(option => (
-                                    <div key={option} className="flex items-center">
-                                        <input
-                                            type="radio"
-                                            id={`q${index + 1}-${option}`}
-                                            name={`q${index + 1}`}
-                                            value={option}
-                                            checked={answers[`q${index + 1}`] === option}
-                                            onChange={handleChange}
-                                            className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                            required
-                                        />
-                                        <label htmlFor={`q${index + 1}-${option}`} className="ml-3 text-sm text-gray-700">{option}</label>
-                                    </div>
+                                    <label key={option} className="flex items-center gap-2 cursor-pointer group">
+                                        <div className="relative flex items-center justify-center">
+                                            <input
+                                                type="radio"
+                                                name={`q${index + 1}`}
+                                                value={option}
+                                                checked={answers[`q${index + 1}`] === option}
+                                                onChange={handleChange}
+                                                className="peer appearance-none h-5 w-5 border-2 border-gray-300 rounded-full checked:border-blue-700 transition-all"
+                                                required
+                                            />
+                                            <div className="absolute h-2.5 w-2.5 rounded-full bg-blue-700 opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                                        </div>
+                                        <span className="text-xs font-bold text-gray-500 uppercase group-hover:text-blue-700 transition-colors">
+                                            {option}
+                                        </span>
+                                    </label>
                                 ))}
                             </div>
                         </div>
                     ))}
-                    <div className="flex justify-end">
-                        <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Kirim Kuesioner
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+
+                <div className="flex justify-end pt-4">
+                    <button 
+                        type="submit" 
+                        className="w-full md:w-auto bg-blue-700 text-white font-black px-12 py-3 rounded-xl hover:bg-blue-800 transition-all shadow-lg shadow-blue-100 uppercase text-xs tracking-widest"
+                    >
+                        Kirim Penilaian
+                    </button>
+                </div>
+            </form>
         </main>
     );
 };
