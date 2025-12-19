@@ -58,7 +58,6 @@ const PengajuanJudulPage = () => {
         formSubmitData.append('abstrak', formData.abstrak);
         formSubmitData.append('jalur', formData.jalur);
         formSubmitData.append('baru_ulang', formData.baru_ulang);
-        // Sertifikasi logic tetap dipertahankan sesuai kebutuhan backend Anda
 
         const response = await submitPengajuanJudul(formSubmitData);
         if (response.status === 'success') {
@@ -84,11 +83,11 @@ const PengajuanJudulPage = () => {
             </header>
 
             <div className="w-full space-y-8">
-                {/* Section Data Akademik (Read Only) */}
+                {/* Section Data Akademik  */}
                 <section className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
                     <div className="flex items-center gap-2 mb-6 border-b pb-3">
                         <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
-                        <h2 className="text-gray-800 font-bold text-sm tracking-widest uppercase">Informasi Akademik Terkini</h2>
+                        <h2 className="text-gray-800 font-bold text-sm tracking-widest uppercase">Informasi Akademik</h2>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                         {[

@@ -3,6 +3,7 @@ import { getBimbinganSkripsiHistory } from '../../api/api';
 
 const BimbinganSkripsiPage = () => {
     const [historiBimbingan, setHistoriBimbingan] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const formatDateToDMY = (dateString) => {
         if (!dateString) return '-';
@@ -16,35 +17,46 @@ const BimbinganSkripsiPage = () => {
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
         const fetchData = async () => {
-            const history = await getBimbinganSkripsiHistory(nim);
-            setHistoriBimbingan(history);
+            try {
+                setLoading(true);
+                const history = await getBimbinganSkripsiHistory(nim);
+                setHistoriBimbingan(history);
+            } catch (error) {
+                console.error("Gagal memuat histori bimbingan:", error);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchData();
     }, []);
 
     const renderDesktopTable = () => (
-        <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-gray-500">
-                <thead className="text-xs text-white uppercase bg-blue-600 rounded-t-lg">
+        <div className="overflow-x-auto hidden md:block">
+            <table className="w-full text-left text-sm border-collapse">
+                <thead className="text-[10px] text-blue-900 uppercase tracking-[0.2em] bg-blue-50/50 border-y border-blue-100">
                     <tr>
-                        <th scope="col" className="py-3 px-6 rounded-tl-lg">Tanggal</th>
-                        <th scope="col" className="py-3 px-6">Bab</th>
-                        <th scope="col" className="py-3 px-6">Pembimbing</th>
-                        <th scope="col" className="py-3 px-6">Uraian</th>
-                        <th scope="col" className="py-3 px-6 text-center rounded-tr-lg">Status</th>
+                        <th className="py-4 px-6 w-[150px]">Tanggal</th>
+                        <th className="py-4 px-6 w-[120px] text-center">Bab</th>
+                        <th className="py-4 px-8">Uraian Bimbingan</th>
+                        <th className="py-4 px-6 w-[250px]">Pembimbing</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-50">
                     {historiBimbingan.map((item, index) => (
-                        <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                            <td className="py-3 px-6 whitespace-nowrap">{formatDateToDMY(item.tanggal)}</td>
-                            <td className="py-3 px-6">{item.bab}</td>
-                            <td className="py-3 px-6">{item.pembimbing}</td>
-                            <td className="py-3 px-6">{item.uraian}</td>
-                            <td className="py-3 px-6 text-center">
-                                <span className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${item.status === 'Diterima' ? 'bg-green-500' : 'bg-yellow-500'}`}>
-                                    {item.status}
+                        <tr key={index} className="hover:bg-blue-50/30 transition-colors group">
+                            <td className="py-5 px-6 font-medium text-gray-500 whitespace-nowrap">
+                                {formatDateToDMY(item.tanggal)}
+                            </td>
+                            <td className="py-5 px-6 text-center">
+                                <span className="inline-block min-w-[60px] bg-blue-700 text-white px-3 py-1.5 rounded-lg font-black text-[10px] uppercase shadow-sm shadow-blue-100">
+                                    {item.bab}
                                 </span>
+                            </td>
+                            <td className="py-5 px-8 text-gray-700 leading-relaxed text-xs">
+                                {item.uraian}
+                            </td>
+                            <td className="py-5 px-6 font-bold text-gray-600 text-[11px] uppercase tracking-tight">
+                                {item.pembimbing}
                             </td>
                         </tr>
                     ))}
@@ -54,28 +66,22 @@ const BimbinganSkripsiPage = () => {
     );
 
     const renderMobileCards = () => (
-        <div className="p-4 space-y-4">
+        <div className="space-y-4 md:hidden">
             {historiBimbingan.map((item, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
-                    <div className="flex justify-between items-center pb-2 mb-2 border-b">
-                        <h3 className="font-bold text-base text-gray-800">{item.bab}</h3>
-                        <span className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${item.status === 'Diterima' ? 'bg-green-500' : 'bg-yellow-500'}`}>
-                            {item.status}
+                <div key={index} className="bg-white rounded-[1.5rem] border border-gray-200 p-5 shadow-sm">
+                    <div className="flex justify-between items-start mb-3">
+                        <span className="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-lg uppercase">
+                            Bab {item.bab}
                         </span>
+                        <span className="text-[10px] font-bold text-gray-400">{formatDateToDMY(item.tanggal)}</span>
                     </div>
-                    <div className="space-y-2 text-sm text-gray-600">
-                        <div className='flex flex-col'>
-                            <span className="font-semibold">Tanggal:</span>
-                            <span className="ml-2">{formatDateToDMY(item.tanggal)}</span>
-                        </div>
-                        <div className='flex flex-col'>
-                            <span className="font-semibold">Pembimbing:</span>
-                            <span className="ml-2">{item.pembimbing}</span>
-                        </div>
-                        <div className="mt-4 pt-2 border-t">
-                            <span className="font-semibold block mb-1">Uraian:</span>
-                            <p className="text-gray-700">{item.uraian}</p>
-                        </div>
+                    <div className="mb-4">
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Uraian:</span>
+                        <p className="text-xs text-gray-800 leading-relaxed font-medium italic">"{item.uraian}"</p>
+                    </div>
+                    <div className="pt-3 border-t border-gray-50 flex justify-between items-center">
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Pembimbing</span>
+                        <span className="text-[10px] font-bold text-gray-700 uppercase">{item.pembimbing}</span>
                     </div>
                 </div>
             ))}
@@ -83,22 +89,43 @@ const BimbinganSkripsiPage = () => {
     );
 
     return (
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
-            <h1 className="text-xl md:text-2xl font-bold mb-6 text-gray-900">Bimbingan Skripsi / Tugas Akhir</h1>
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-6">
-                <h2 className="text-lg md:text-xl font-semibold mb-4 border-b pb-2">Data Bimbingan Skripsi / Tugas Akhir</h2>
-                {historiBimbingan && historiBimbingan.length > 0 ? (
-                    <>
-                        <div className="hidden md:block">
-                            {renderDesktopTable()}
+        <main className="flex-1 p-4 md:p-8 lg:p-10 bg-[#f8fafc] min-h-screen">
+            <div className="w-full">
+                <header className="mb-10">
+                    <h1 className="text-3xl font-black text-gray-800 uppercase tracking-tighter">Bimbingan Skripsi</h1>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mt-1 italic">Log Aktivitas & Konsultasi Tugas Akhir</p>
+                </header>
+
+                <div className="bg-white rounded-[2.5rem] border border-gray-200 shadow-sm overflow-hidden">
+                    <div className="p-8 border-b border-gray-50 flex justify-between items-center bg-white">
+                        <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
+                            <h2 className="text-gray-800 font-black text-[11px] tracking-[0.2em] uppercase">Histori Konsultasi</h2>
                         </div>
-                        <div className="md:hidden">
-                            {renderMobileCards()}
-                        </div>
-                    </>
-                ) : (
-                    <div className="text-center py-4 text-gray-500">Memuat histori bimbingan...</div>
-                )}
+                    </div>
+
+                    <div className="p-2 md:p-0">
+                        {loading ? (
+                            <div className="p-32 text-center">
+                                <div className="w-10 h-10 border-4 border-blue-700 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                                <p className="text-gray-400 font-black text-[10px] uppercase tracking-widest">Sinkronisasi Data...</p>
+                            </div>
+                        ) : historiBimbingan && historiBimbingan.length > 0 ? (
+                            <>
+                                {renderDesktopTable()}
+                                <div className="p-4 md:hidden">
+                                    {renderMobileCards()}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="p-32 text-center">
+                                <p className="text-gray-400 font-black text-[10px] uppercase tracking-widest">
+                                    Belum ada catatan bimbingan
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </main>
     );

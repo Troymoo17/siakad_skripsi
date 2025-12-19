@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom'; 
 import { loginUser } from '../api/api';
 import Swal from 'sweetalert2';
 import logo from '../assets/logo.png';
@@ -34,51 +34,99 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-blue-500 overflow-x-hidden flex flex-col items-center justify-start md:justify-center relative">
-      <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-white z-0"></div>
-      <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-white z-0"></div>
-      <div className="w-full flex flex-col items-center md:flex-row md:items-stretch md:justify-center relative z-10">
-        <div className="relative w-full md:w-2/5 flex flex-col items-center md:items-start md:justify-center pt-6 md:pt-0 z-0">
-          <div className="relative w-full max-w-xs sm:max-w-md mx-auto md:-translate-x-48 md:-translate-y-28">
-            <img src={logoOnly} alt="Logo Widya Pratama" className="block md:hidden absolute left-1/2 top-1/2 w-40 sm:w-56 -translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none select-none z-0" />
-            <img src={logoOnly} alt="Logo Widya Pratama" className="hidden md:block absolute top-1/2 left-0 -translate-y-1/2 w-[451px] select-none pointer-events-none z-0" />
-            <div className="relative z-10 bg-transparent p-4 md:p-0 rounded-lg md:rounded-none w-full text-white md:text-left text-center">
-              <h1 className="font-extrabold text-xl sm:text-3xl md:text-5xl leading-tight drop-shadow max-w-full md:max-w-[260px]">SISTEM INFORMASI<br /><span className="text-orange-400">AKADEMIK</span>.</h1>
-              <br />
-              <p className="text-lg sm:text-2xl font-bold">INSTITUT WIDYA PRATAMA PEKALONGAN</p>
+    <div className="min-h-screen bg-gradient-to-b from-[#005c97] to-[#363795] flex flex-col relative overflow-x-hidden">
+      
+      {/* Background Putih Bawah */}
+      <div className="absolute bottom-0 left-0 w-full h-[25vh] md:h-[30vh] bg-white z-0 rounded-t-[3rem] md:rounded-none"></div>
+
+      <div className="flex-1 flex flex-col md:flex-row items-center justify-center relative z-10 p-4 min-[350px]:p-6">
+        
+        {/* Branding Section  */}
+        <div className="w-full md:w-1/2 flex flex-col items-center md:items-start pt-16 min-[350px]:pt-20 md:pt-0 mb-4 md:mb-0 md:pl-12 lg:pl-20 transition-all duration-500">
+          <div className="relative">
+            <img 
+              src={logoOnly} 
+              alt="Watermark" 
+              className="absolute top-1/2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-[-10%] -translate-y-1/2 w-44 min-[350px]:w-56 sm:w-64 md:w-[450px] opacity-10 brightness-0 invert pointer-events-none" 
+            />
+            
+            <div className="relative z-10 text-center md:text-left">
+              <h1 className="font-black text-2xl min-[350px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight tracking-tighter drop-shadow-2xl">
+                SISTEM INFORMASI<br />
+                <span className="text-orange-400">AKADEMIK</span>
+              </h1>
+              <p className="mt-2 md:mt-4 text-[11px] min-[350px]:text-sm sm:text-base md:text-xl font-bold tracking-[0.2em] text-blue-100 opacity-90 uppercase">
+                Institut Widya Pratama
+              </p>
             </div>
           </div>
         </div>
-        <div className="w-full md:w-[540px] flex justify-center mt-6 md:mt-0 z-10">
-          <div className="relative w-[98%] sm:w-[510px] max-w-lg bg-white shadow-xl rounded-xl p-6 sm:p-12 mx-auto">
-            <div className="flex flex-col items-center mb-6">
-              <img src={logo} alt="Logo IWP" className="w-14 sm:w-20 mb-2" />
+
+        {/* Login Card Section  */}
+        <div className="w-full max-w-[450px] md:w-[420px] lg:w-[480px] translate-y-24 min-[350px]:translate-y-28 md:translate-y-32 lg:translate-y-36 transition-all duration-500">
+          <div className="bg-white shadow-[0_25px_60px_rgba(0,0,0,0.35)] rounded-[2.5rem] p-7 min-[350px]:p-9 sm:p-12 border border-gray-100 mx-auto">
+            <div className="flex flex-col items-center mb-8">
+              <img src={logo} alt="Logo IWP" className="w-16 min-[350px]:w-20" />
             </div>
-            <form onSubmit={handleLogin}>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-xs sm:text-sm font-semibold mb-1" htmlFor="userid">ID Pengguna</label>
-                <input id="userid" type="text" placeholder="Masukkan ID Pengguna" value={nim} onChange={(e) => setNim(e.target.value)} className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 text-sm sm:text-base" required/>
+
+            <form onSubmit={handleLogin} className="space-y-4 md:space-y-6">
+              <div>
+                <label className="block text-gray-700 text-[10px] min-[350px]:text-xs font-bold uppercase mb-2 tracking-widest ml-1">
+                  ID Pengguna
+                </label>
+                <input 
+                  type="text" 
+                  placeholder="Masukkan NIM" 
+                  value={nim} 
+                  onChange={(e) => setNim(e.target.value)} 
+                  className="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm transition-all" 
+                  required
+                />
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-xs sm:text-sm font-semibold mb-1" htmlFor="password">Kata Sandi</label>
-                <input id="password" type="password" placeholder="Masukkan Kata Sandi" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 text-sm sm:text-base" required/>
+
+              <div>
+                <label className="block text-gray-700 text-[10px] min-[350px]:text-xs font-bold uppercase mb-2 tracking-widest ml-1">
+                  Kata Sandi
+                </label>
+                <input 
+                  type="password" 
+                  placeholder="Masukkan Password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  className="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm transition-all" 
+                  required
+                />
               </div>
-              <div className="mb-6">
-                <label className="block text-gray-700 text-xs sm:text-sm font-semibold mb-1" htmlFor="role">Sebagai</label>
-                <select id="role" className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 text-sm sm:text-base">
-                  <option>Mahasiswa</option>
-                  <option>Dosen</option>
-                  <option>Admin</option>
-                  <option>Pimpinan</option>
-                </select>
-              </div>
-              <button type="submit" className="w-full bg-blue-700 text-white font-semibold py-2 rounded-lg hover:bg-blue-800 transition text-sm sm:text-base mb-2">Masuk</button>
-              <div className="text-center">
-                <a href="/lupa-sandi" className="text-xs sm:text-sm text-blue-500 hover:underline">Lupa kata sandi?</a>
+
+              <button 
+                type="submit" 
+                className="w-full bg-[#005c97] hover:bg-[#363795] text-white font-black py-4 rounded-2xl shadow-xl transition-all transform active:scale-95 uppercase tracking-widest text-xs sm:text-sm mt-2"
+              >
+                Masuk
+              </button>
+
+              <div className="text-center mt-4">
+                <NavLink 
+                  to="/lupa-sandi" 
+                  className={({ isActive }) => 
+                    `text-xs sm:text-sm font-bold transition-colors ${
+                      isActive ? "text-[#363795]" : "text-blue-600 hover:text-blue-800"
+                    }`
+                  }
+                >
+                  Lupa kata sandi?
+                </NavLink>
               </div>
             </form>
           </div>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="relative z-10 py-6 text-center mt-36 min-[350px]:mt-44 md:mt-0">
+        <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-4">
+          &copy; {new Date().getFullYear()} Institut Widya Pratama
+        </p>
       </div>
     </div>
   );

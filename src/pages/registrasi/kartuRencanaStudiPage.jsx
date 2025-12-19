@@ -10,183 +10,136 @@ const KRSPage = () => {
 
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const mhsData = await getMahasiswaData(nim);
-                setMahasiswaData(mhsData);
-                
-                if (mhsData?.semester_sekarang) {
-                    // LOGIC ASLI TIDAK BERUBAH
-                    const data = await getKRSData(nim, mhsData.semester_sekarang);
-                    setKrsData(data);
-                    if (data?.krs_terisi) {
-                        setSelectedCourses(data.krs_terisi);
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching KRS data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
+        fetchInitialData(nim);
     }, []);
 
-    const handleCheckboxChange = (kode_mk) => {
-        // LOGIC ASLI TIDAK BERUBAH
-        setSelectedCourses(prev =>
-            prev.includes(kode_mk) ? prev.filter(id => id !== kode_mk) : [...prev, kode_mk]
+    const fetchInitialData = async (nim) => {
+        setLoading(true);
+        const mhs = await getMahasiswaData(nim);
+        setMahasiswaData(mhs);
+        if (mhs?.semester_sekarang) {
+            const data = await getKRSData(nim, mhs.semester_sekarang);
+            setKrsData(data);
+            setSelectedCourses(data?.krs_terisi || []);
+        }
+        setLoading(false);
+    };
+
+    const toggleCourse = (kode_mk) => {
+        setSelectedCourses(prev => 
+            prev.includes(kode_mk) ? prev.filter(k => k !== kode_mk) : [...prev, kode_mk]
         );
     };
 
-    const handleKRSSubmit = async (e) => {
-        e.preventDefault();
-        const nim = localStorage.getItem('loggedInUserNim');
-        // LOGIC ASLI TIDAK BERUBAH
-        const response = await submitKRS(nim, selectedCourses);
-        if (response.status === 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: response.message,
-                timer: 1500,
-                showConfirmButton: false
-            });
+    const handleSave = async () => {
+        const nim = mahasiswaData?.nim;
+        const sem = mahasiswaData?.semester_sekarang;
+        
+        const success = await submitKRS(nim, sem, selectedCourses);
+        if (success) {
+            Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Rencana studi telah diperbarui', timer: 1500, showConfirmButton: false });
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
-                text: response.message
-            });
+            Swal.fire({ icon: 'error', title: 'Gagal', text: 'Terjadi kesalahan saat menyimpan data' });
         }
     };
 
-    // Tampilan Header Informasi (Full Width)
-    const renderStudentInfo = () => (
-        <div className="w-full bg-white p-6 rounded-xl border border-gray-300 shadow-sm mb-6">
-            <div className="flex items-center gap-2 mb-4 border-b pb-3">
-                <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
-                <h2 className="text-gray-800 font-bold text-sm tracking-widest uppercase">
-                    Status Rencana Studi
-                </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-                <div>
-                    <label className="text-[10px] font-bold text-gray-400 uppercase">Mahasiswa</label>
-                    <p className="font-bold text-gray-700">{mahasiswaData?.nama || 'Memuat...'}</p>
-                </div>
-                <div>
-                    <label className="text-[10px] font-bold text-gray-400 uppercase">NIM</label>
-                    <p className="font-bold text-gray-700">{mahasiswaData?.nim || 'Memuat...'}</p>
-                </div>
-                <div>
-                    <label className="text-[10px] font-bold text-gray-400 uppercase">Semester Target</label>
-                    <p className="font-bold text-blue-700">Semester {mahasiswaData?.semester_sekarang || '-'}</p>
-                </div>
-            </div>
-        </div>
-    );
-
-    // Tampilan Baris Mata Kuliah (Full Width)
-    const renderCourseRows = () => (
-        <div className="w-full space-y-3">
-            <div className="flex justify-between items-center px-1">
-                <h2 className="text-gray-800 font-bold text-xs tracking-widest uppercase opacity-60">Pilih Mata Kuliah</h2>
-                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                    {selectedCourses.length} Terpilih
-                </span>
-            </div>
-            
-            {krsData?.mata_kuliah_tersedia.map((mk, index) => {
-                const isSelected = selectedCourses.includes(mk.kode_mk);
-                return (
-                    <div 
-                        key={index} 
-                        onClick={() => handleCheckboxChange(mk.kode_mk)}
-                        // Pewarnaan baris agar terlihat jelas terpilih
-                        className={`w-full p-4 rounded-xl border transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 ${
-                            isSelected ? 'border-blue-600 bg-blue-50/30' : 'border-gray-300 bg-white hover:bg-gray-50'
-                        }`}
-                    >
-                        <div className="flex items-center gap-4 flex-1">
-                            {/* Checkbox Custom */}
-                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${
-                                isSelected ? 'bg-blue-700 border-blue-700' : 'bg-white border-gray-400'
-                            }`}>
-                                {isSelected && (
-                                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                )}
-                            </div>
-                            
-                            {/* Nama Mata Kuliah */}
-                            <div>
-                                <h3 className="font-bold text-gray-800 text-sm uppercase">{mk.nama_mk}</h3>
-                                {/* Menghilangkan Kode dan SKS dari sini */}
-                            </div>
-                        </div>
-
-                        {/* Pindahkan KODE MATKUL dan SKS ke bagian kanan (menggantikan Grup Kelas dan Jadwal) */}
-                        <div className="flex items-center gap-6 justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0">
-                            
-                            <div className="text-right">
-                                <p className="text-[9px] text-gray-400 font-bold uppercase">Kode Matkul</p>
-                                <p className="text-sm font-black text-gray-700 uppercase">{mk.kode_mk}</p>
-                            </div>
-                            
-                            <div className="text-right border-l pl-6 border-gray-200">
-                                <p className="text-[9px] text-gray-400 font-bold uppercase">SKS</p>
-                                <p className="text-sm font-black text-blue-700">{mk.sks}</p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
-    );
-
     return (
-        <main className="flex-1 p-4 md:p-8 lg:p-10 bg-gray-50 min-h-screen">
-            <header className="mb-8">
-                <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tighter">Kartu Rencana Studi</h1>
-                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em]">Pengisian Mata Kuliah Semester Berjalan</p>
-            </header>
+        <main className="flex-1 p-4 md:p-8 bg-[#f8fafc] min-h-screen">
+            <div className="w-full">
+                {/* Header Section - Full Width */}
+                <div className="bg-white rounded-[3rem] shadow-sm border border-gray-100 p-8 md:p-12 mb-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div className="text-center md:text-left">
+                        <h1 className="text-3xl md:text-4xl font-black text-gray-800 tracking-tight">Kartu Rencana Studi</h1>
+                        <p className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.3em] mt-2">
+                            Sistem Informasi Akademik &bull; {mahasiswaData?.nama} &bull; {mahasiswaData?.nim}
+                        </p>
+                    </div>
+                    <div className="flex flex-col items-center md:items-end gap-3">
+                        <div className="bg-blue-50 px-6 py-2 rounded-2xl border border-blue-100">
+                            <p className="text-[10px] font-black text-[#005c97] uppercase tracking-widest">Semester Target: {mahasiswaData?.semester_sekarang}</p>
+                        </div>
+                        <button 
+                            onClick={handleSave}
+                            className="bg-gradient-to-br from-[#005c97] to-[#363795] text-white font-black px-12 py-4 rounded-[1.5rem] shadow-xl shadow-blue-100 hover:scale-105 active:scale-95 transition-all uppercase text-xs tracking-[0.2em]"
+                        >
+                            Simpan Rencana Studi
+                        </button>
+                    </div>
+                </div>
 
-            <form onSubmit={handleKRSSubmit} className="w-full">
                 {loading ? (
-                    <div className="w-full bg-white p-20 rounded-xl text-center border border-gray-200 shadow-sm">
-                        <div className="w-8 h-8 border-4 border-blue-700 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">Sinkronisasi Data...</p>
+                    <div className="w-full py-40 flex flex-col items-center justify-center">
+                        <div className="w-12 h-12 border-4 border-[#005c97] border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="font-black text-gray-300 animate-pulse tracking-[0.5em] uppercase">Sinkronisasi Kurikulum...</p>
                     </div>
                 ) : (
-                    <>
-                        {renderStudentInfo()}
-                        
-                        {krsData && krsData.mata_kuliah_tersedia.length > 0 ? (
-                            <>
-                                {renderCourseRows()}
-                                
-                                {/* Tombol Simpan */}
-                                <div className="mt-8 flex justify-end">
-                                    <button 
-                                        type="submit" 
-                                        className="w-full md:w-auto bg-blue-700 text-white font-black px-10 py-3 rounded-xl hover:bg-blue-800 transition-all shadow-lg shadow-blue-200 uppercase text-xs tracking-widest"
-                                    >
-                                        Simpan Rencana Studi
-                                    </button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-10">
+                        {krsData?.mata_kuliah_tersedia.map((mk) => {
+                            const isSelected = selectedCourses.includes(mk.kode_mk);
+                            const isWajib = mk.status === 'Wajib';
+                            
+                            return (
+                                <div 
+                                    key={mk.kode_mk}
+                                    onClick={() => toggleCourse(mk.kode_mk)}
+                                    className={`bg-white rounded-[2.5rem] border-2 transition-all cursor-pointer overflow-hidden flex flex-col h-full group ${
+                                        isSelected 
+                                        ? 'border-[#005c97] shadow-2xl shadow-blue-100 -translate-y-2' 
+                                        : 'border-gray-100 hover:border-blue-200 hover:-translate-y-1'
+                                    }`}
+                                >
+                                    {/* Card Header dengan Indikator Status */}
+                                    <div className={`px-8 py-5 flex justify-between items-center transition-colors ${
+                                        isWajib 
+                                        ? (isSelected ? 'bg-[#005c97]' : 'bg-gray-800 group-hover:bg-[#005c97]') 
+                                        : (isSelected ? 'bg-emerald-600' : 'bg-gray-600 group-hover:bg-emerald-600')
+                                    }`}>
+                                        <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">{mk.kode_mk}</span>
+                                        <div className={`w-7 h-7 rounded-xl border-2 flex items-center justify-center transition-all ${
+                                            isSelected ? 'bg-white border-white rotate-0' : 'border-white/30 rotate-45'
+                                        }`}>
+                                            {isSelected && (
+                                                <svg className={`w-4 h-4 ${isWajib ? 'text-[#005c97]' : 'text-emerald-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Card Body */}
+                                    <div className="p-8 flex flex-col flex-1 justify-between gap-6 bg-gradient-to-b from-white to-gray-50/30">
+                                        <div>
+                                            <div className="h-14 flex items-center mb-4">
+                                                <h3 className="font-black text-gray-800 text-sm md:text-base uppercase line-clamp-2 leading-tight">
+                                                    {mk.nama_mk}
+                                                </h3>
+                                            </div>
+                                            <span className={`text-[9px] font-black px-4 py-1.5 rounded-xl uppercase tracking-widest border ${
+                                                isWajib 
+                                                ? 'bg-blue-50 text-[#005c97] border-blue-100' 
+                                                : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                                            }`}>
+                                                {mk.status || 'Wajib'}
+                                            </span>
+                                        </div>
+                                        
+                                        <div className="flex justify-between items-end pt-6 border-t border-gray-100">
+                                            <div>
+                                                <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1">Beban Kredit</p>
+                                                <p className="text-base font-black text-gray-700">{mk.sks} SKS</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1">Semester</p>
+                                                <p className="text-base font-black text-[#005c97]">{mk.semester}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </>
-                        ) : (
-                            <div className="w-full bg-white p-12 rounded-xl text-center border border-gray-300 shadow-sm">
-                                <p className="text-gray-500 font-bold text-sm uppercase">Tidak ada mata kuliah tersedia</p>
-                            </div>
-                        )}
-                    </>
+                            );
+                        })}
+                    </div>
                 )}
-            </form>
+            </div>
         </main>
     );
 };

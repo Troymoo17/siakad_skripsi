@@ -13,106 +13,51 @@ const KurikulumPage = () => {
         fetchData();
     }, []);
 
-    const renderDesktopCards = () => (
-        <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {kurikulumData.map((item, index) => (
-                <div key={index} className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-                    <div className="flex justify-between items-center border-b pb-2 mb-2">
-                        <h3 className="font-bold text-lg text-gray-800 uppercase leading-tight">{item.nama_mk}</h3>
-                        <span className={
-                            `text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap 
-                            ${item.status === 'Wajib' 
-                                ? 'text-blue-600 bg-blue-100' 
-                                : 'text-green-600 bg-green-100'
-                            }`
-                        }>
-                            {item.status}
-                        </span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="bg-gray-50 p-2 rounded">
-                            <p className="text-gray-500 text-xs font-semibold">Kode MK</p>
-                            <p className="font-bold text-gray-800">{item.kode_mk}</p>
-                        </div>
-                        <div className="bg-gray-50 p-2 rounded">
-                            <p className="text-gray-500 text-xs font-semibold">SKS</p>
-                            <p className="font-bold text-gray-800">{item.sks} SKS</p>
-                        </div>
-                        <div className="bg-gray-50 p-2 rounded">
-                            <p className="text-gray-500 text-xs font-semibold">Grade Minimal</p>
-                            <p className="font-bold text-gray-800">{item.grade_min || '-'}</p>
-                        </div>
-                        <div className="bg-gray-50 p-2 rounded">
-                            <p className="text-gray-500 text-xs font-semibold">Semester</p>
-                            <p className="font-bold text-gray-800">{item.semester || '-'}</p>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-
-    const renderMobileCards = () => (
-        <div className="grid grid-cols-1 gap-4">
-            {kurikulumData.map((item, index) => (
-                <div key={index} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex">
-                    {/* Aksen Warna Samping berdasarkan Status */}
-                    <div className={`w-2 ${item.status === 'Wajib' ? 'bg-blue-600' : 'bg-green-500'}`}></div>
-                    
-                    <div className="flex-1 p-4">
-                        <div className="flex justify-between items-start mb-2 gap-2">
-                            <h3 className="font-bold text-sm text-gray-800 leading-snug uppercase">{item.nama_mk}</h3>
-                            <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase ${
-                                item.status === 'Wajib' ? 'text-blue-700 bg-blue-50' : 'text-green-700 bg-green-50'
-                            }`}>
-                                {item.status}
-                            </span>
-                        </div>
-                        
-                        <div className="flex items-center gap-4 mt-3">
-                            <div>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Kode</p>
-                                <p className="text-xs font-semibold text-gray-700">{item.kode_mk}</p>
-                            </div>
-                            <div className="h-6 w-[1px] bg-gray-100"></div>
-                            <div>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">SKS</p>
-                                <p className="text-xs font-semibold text-gray-700">{item.sks} SKS</p>
-                            </div>
-                            <div className="h-6 w-[1px] bg-gray-100"></div>
-                            <div>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Grade Min</p>
-                                <p className="text-xs font-semibold text-gray-700">{item.grade_min || '-'}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-
     return (
-        <main className="flex-1 p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen">
-            <header className="mb-6">
-                <h1 className="text-xl md:text-2xl font-bold text-gray-800">Daftar Kurikulum</h1>
-                <p className="text-xs text-gray-500 mt-1">Daftar mata kuliah yang tersedia dalam kurikulum Anda.</p>
-            </header>
-            
-            <div id="kurikulum-content-container">
-                {kurikulumData.length > 0 ? (
-                    <>
-                        <div className='hidden md:block'>
-                            {renderDesktopCards()}
+        <main className="flex-1 p-4 md:p-8 bg-[#f8fafc] min-h-screen">
+            <div className="w-full">
+                <div className="bg-white rounded-[3rem] shadow-sm border border-gray-100 overflow-hidden mb-10">
+                    <div className="p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8">
+                        <div className="flex-1 text-center md:text-left">
+                            <h1 className="text-3xl font-black text-[#1e293b] tracking-tight mb-2">Kurikulum</h1>
+                            <p className="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">Daftar Mata Kuliah Wajib & Pilihan</p>
                         </div>
-                        <div className='md:hidden'>
-                            {renderMobileCards()}
+                        <div className="w-full md:w-48 bg-gradient-to-br from-[#005c97] to-[#363795] p-6 rounded-[2.5rem] text-center shadow-xl shadow-blue-100">
+                            <p className="text-[10px] font-black text-blue-200 uppercase tracking-[0.2em] mb-1">Total Matkul</p>
+                            <p className="text-4xl font-black text-white">{kurikulumData.length}</p>
                         </div>
-                    </>
-                ) : (
-                    <div className="bg-white rounded-lg border border-dashed border-gray-300 p-12 text-center">
-                        <p className="text-gray-400 text-sm font-medium italic">Memuat data kurikulum...</p>
                     </div>
-                )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mb-10">
+                    {kurikulumData.map((item, index) => (
+                        <div key={index} className="bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full hover:border-blue-200 transition-colors">
+                            <div className={`px-8 py-5 flex justify-between items-center ${
+                                item.status === 'Wajib' ? 'bg-[#005c97]' : 'bg-emerald-600'
+                            }`}>
+                                <h2 className="text-[10px] font-black text-white uppercase tracking-widest">{item.kode_mk}</h2>
+                                <span className="bg-white/20 text-white text-[9px] font-black px-3 py-1 rounded-lg uppercase border border-white/20">
+                                    {item.status}
+                                </span>
+                            </div>
+                            <div className="p-8 space-y-6 flex-1 bg-white">
+                                <div className="h-12 flex items-center">
+                                    <h3 className="font-black text-gray-800 text-sm uppercase line-clamp-2 leading-tight">{item.nama_mk}</h3>
+                                </div>
+                                <div className="flex justify-between items-end pt-6 border-t border-gray-50">
+                                    <div>
+                                        <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest">Semester</p>
+                                        <p className="text-base font-black text-gray-700">{item.semester || '-'}</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest">SKS</p>
+                                        <p className="text-base font-black text-[#005c97]">{item.sks}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </main>
     );

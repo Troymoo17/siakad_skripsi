@@ -45,7 +45,7 @@ const SurveiKepuasanSkripsiPage = () => {
     ];
 
     return (
-        <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+        <main className="flex-1 p-4 md:p-8 lg:p-10 bg-[#f8fafc] min-h-screen">
             <h1 className="text-xl md:text-2xl font-bold mb-6 text-gray-900">Survei Kepuasan Skripsi</h1>
             <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
                 <form className="space-y-6" onSubmit={handleSubmit}>

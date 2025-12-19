@@ -12,7 +12,6 @@ const IkadIkasPage = () => {
             try {
                 setLoading(true);
                 const mhsData = await getMahasiswaData(nim);
-                // LOGIC ASLI TIDAK BERUBAH
                 const data = await getIkadIkasData(nim, mhsData?.semester_sekarang);
                 setIkadIkasData(data);
             } catch (error) {
@@ -50,7 +49,6 @@ const IkadIkasPage = () => {
                     <div className="flex items-center gap-6 justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0">
                         {item.status === 'Belum Diisi' ? (
                             <Link 
-                                // LOGIC ASLI TIDAK BERUBAH
                                 to={`/dashboard/registrasi/ikad-ikas/${type.toLowerCase()}/${type === 'IKAD' ? item.kode_mk : item.id_staff}`} 
                                 state={{ name: type === 'IKAD' ? item.dosen : item.nama_staf }}
                                 className="bg-blue-700 text-white text-[10px] font-black px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors uppercase tracking-widest shadow-md shadow-blue-100"
@@ -76,7 +74,6 @@ const IkadIkasPage = () => {
                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em]">Evaluasi Dosen, Administrasi, dan Sarana</p>
             </header>
 
-            {/* Konten Utama sekarang melebar penuh (w-full) */}
             <div className="w-full"> 
                 {loading ? (
                     <div className="w-full bg-white p-20 rounded-xl text-center border border-gray-200">

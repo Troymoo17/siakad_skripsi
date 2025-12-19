@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import logo from '../assets/logo.png';
+import logoOnly from '../assets/logo_only.png';
 
 const LupaSandiPage = () => {
   const [email, setEmail] = useState('');
@@ -9,56 +10,99 @@ const LupaSandiPage = () => {
 
   const handleReset = (e) => {
     e.preventDefault();
-    // Simulasi logic lupa sandi
     Swal.fire({
       icon: "success",
       title: "Instruksi Terkirim",
       text: "Silahkan cek email Anda untuk mengatur ulang kata sandi.",
-      confirmButtonColor: "#1d4ed8"
+      confirmButtonColor: "#005c97",
     }).then(() => {
       navigate('/');
     });
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-        <div className="flex flex-col items-center mb-8">
-          <img src={logo} alt="Logo IWP" className="w-20 mb-4" />
-          <h2 className="text-xl font-bold text-gray-800">Lupa Kata Sandi?</h2>
-          <p className="text-sm text-gray-500 text-center mt-2">
-            Masukkan email yang terdaftar pada sistem untuk menerima instruksi pemulihan.
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-[#005c97] to-[#363795] flex flex-col relative overflow-x-hidden">
+      
+      {/* Background Putih Bawah */}
+      <div className="absolute bottom-0 left-0 w-full h-[25vh] md:h-[30vh] bg-white z-0 rounded-t-[3rem] md:rounded-none"></div>
+
+      <div className="flex-1 flex flex-col md:flex-row items-center justify-center relative z-10 p-4 min-[350px]:p-6">
+        
+        {/* Branding Section - Diturunkan agar tidak terlalu ke atas */}
+        <div className="w-full md:w-1/2 flex flex-col items-center md:items-start pt-12 min-[350px]:pt-16 md:pt-0 mb-4 md:mb-0 md:pl-12 lg:pl-20">
+          <div className="relative">
+            <img 
+              src={logoOnly} 
+              alt="Watermark" 
+              className="absolute top-1/2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-[-10%] -translate-y-1/2 w-44 min-[350px]:w-56 sm:w-64 md:w-[450px] opacity-10 brightness-0 invert pointer-events-none" 
+            />
+            
+            <div className="relative z-10 text-center md:text-left text-white">
+              <h1 className="font-black text-2xl min-[350px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tighter drop-shadow-2xl">
+                PEMULIHAN<br />
+                <span className="text-orange-400">AKUN</span>
+              </h1>
+              <p className="mt-2 md:mt-4 text-[11px] min-[350px]:text-sm sm:text-base md:text-xl font-bold tracking-[0.2em] text-blue-100 opacity-90 uppercase">
+                Institut Widya Pratama
+              </p>
+            </div>
+          </div>
         </div>
 
-        <form onSubmit={handleReset} className="space-y-6">
-          <div>
-            <label className="block text-gray-700 text-xs font-bold uppercase mb-2 ml-1">Alamat Email</label>
-            <input 
-              type="email" 
-              placeholder="nama@mhs.widya-pratama.ac.id" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all"
-              required 
-            />
-          </div>
+        {/* Card Reset Password - Posisi Turun menembus area putih */}
+        <div className="w-full max-w-[450px] md:w-[420px] lg:w-[480px] translate-y-20 min-[350px]:translate-y-24 md:translate-y-32 lg:translate-y-36">
+          <div className="bg-white shadow-[0_25px_60px_rgba(0,0,0,0.35)] rounded-[2.5rem] p-7 min-[350px]:p-9 sm:p-12 border border-gray-100 mx-auto">
+            <div className="flex flex-col items-center mb-6">
+              <div className="bg-blue-50 p-4 rounded-full mb-4">
+                <img src={logo} alt="Logo IWP" className="w-12 min-[350px]:w-14" />
+              </div>
+              <h2 className="text-lg min-[350px]:text-xl font-black text-gray-800 uppercase tracking-tight">Lupa Kata Sandi?</h2>
+              <p className="text-[10px] min-[350px]:text-xs text-gray-500 text-center mt-2 font-medium px-4">
+                Masukkan email yang terdaftar untuk menerima instruksi pemulihan.
+              </p>
+            </div>
 
-          <button type="submit" className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-200 transition-all">
-            KIRIM INSTRUKSI
-          </button>
+            <form onSubmit={handleReset} className="space-y-4 md:space-y-6">
+              <div>
+                <label className="block text-gray-700 text-[10px] min-[350px]:text-xs font-bold uppercase mb-2 tracking-widest ml-1">
+                  Alamat Email
+                </label>
+                <input 
+                  type="email" 
+                  placeholder="nama@mhs.widya-pratama.ac.id" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-xs min-[350px]:text-sm transition-all"
+                  required 
+                />
+              </div>
 
-          <div className="text-center">
-            <Link to="/" className="text-sm font-semibold text-gray-500 hover:text-blue-600 transition-colors">
-              Kembali ke halaman Login
-            </Link>
+              <button 
+                type="submit" 
+                className="w-full bg-[#005c97] hover:bg-[#363795] text-white font-black py-4 rounded-2xl shadow-xl transition-all transform active:scale-95 uppercase tracking-widest text-xs sm:text-sm"
+              >
+                Kirim Instruksi
+              </button>
+
+              <div className="text-center pt-2">
+                <Link to="/" className="text-xs sm:text-sm font-bold text-gray-400 hover:text-blue-600 transition-all flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                  </svg>
+                  Kembali ke Login
+                </Link>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
-      
-      <p className="mt-8 text-xs text-gray-400 font-medium">
-        &copy; {new Date().getFullYear()} Institut Widya Pratama Pekalongan
-      </p>
+
+      {/* Footer */}
+      <div className="relative z-10 py-6 text-center mt-32 min-[350px]:mt-40 md:mt-0">
+        <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-4">
+          &copy; {new Date().getFullYear()} Institut Widya Pratama
+        </p>
+      </div>
     </div>
   );
 };

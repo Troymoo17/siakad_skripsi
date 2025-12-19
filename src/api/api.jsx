@@ -77,24 +77,28 @@ export const getKurikulumData = async (nim) => {
 };
 
 export const getKRSData = async (nim, semester) => {
-  const response = await fetch(`${BASE_URL}/krs.php?nim=${nim}&semester=${semester}`);
-  const data = await response.json();
-  return data.status === 'success' ? data : null;
+    const response = await fetch(`${BASE_URL}/krs.php?nim=${nim}&semester=${semester}`);
+    const data = await response.json();
+    return data.status === 'success' ? data : null;
 };
 
 export const submitKRS = async (nim, semester, selectedCourses) => {
-  const postPromises = selectedCourses.map(kode_mk => {
-    const postData = new FormData();
-    postData.append('nim', nim);
-    postData.append('semester', semester);
-    postData.append('kode_mk', kode_mk);
-    return fetch(`${BASE_URL}/krs.php`, {
-      method: 'POST',
-      body: postData,
-    });
-  });
-  const responses = await Promise.all(postPromises);
-  return responses.every(res => res.ok);
+    try {
+        const response = await fetch(`${BASE_URL}/krs.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nim: nim,
+                semester: semester,
+                selectedCourses: selectedCourses 
+            }),
+        });
+        const result = await response.json();
+        return result.status === 'success';
+    } catch (error) {
+        console.error("Submit KRS Error:", error);
+        return false;
+    }
 };
 
 export const getKMKData = async (nim) => {
@@ -188,9 +192,20 @@ export const submitPengajuanJudul = async (formData) => {
 };
 
 export const getPengajuanUjianData = async (nim) => {
-  const response = await fetch(`${BASE_URL}/skripsi_ujian.php?nim=${nim}`);
-  const data = await response.json();
-  return data;
+    try {
+        const response = await fetch(`${BASE_URL}/skripsi_ujian.php?nim=${nim}`);
+        const text = await response.text(); 
+        
+        try {
+            return JSON.parse(text); 
+        } catch (e) {
+            console.error("Server tidak mengirim JSON. Pesan Server:", e);
+            return { status: 'error', data: [] }; 
+        }
+    } catch (error) {
+        console.error("Error during fetch:", error); 
+        return { status: 'error', data: [] };
+    }
 };
 
 export const submitPengajuanUjian = async (formData) => {

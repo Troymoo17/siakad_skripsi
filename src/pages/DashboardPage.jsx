@@ -63,7 +63,7 @@ const DashboardPage = () => {
         
         <div className="grid grid-cols-3 w-full gap-2 mt-6">
           <div className="bg-gray-50 p-3 rounded-lg text-center border border-gray-100">
-            <div className="text-[10px] uppercase font-bold text-gray-400">Smt</div>
+            <div className="text-[10px] uppercase font-bold text-gray-400">Semester</div>
             <div className="text-lg font-bold text-gray-800">{ipkData?.ips_per_semester?.length || '...'}</div>
           </div>
           <div className="bg-gray-50 p-3 rounded-lg text-center border border-gray-100">

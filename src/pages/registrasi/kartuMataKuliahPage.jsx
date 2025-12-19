@@ -21,9 +21,12 @@ const KMKPage = () => {
         fetchData();
     }, []);
 
-    // Bagian Informasi Mahasiswa - Lebar Penuh (Full Width)
+    const handlePrint = () => {
+        window.print();
+    };
+
     const StudentInfoCard = () => (
-        <div className="w-full bg-white p-6 rounded-xl border border-gray-300 shadow-sm mb-6">
+        <div className="w-full bg-white p-6 rounded-xl border border-gray-300 shadow-sm mb-6 print:border-none print:shadow-none">
             <div className="flex items-center gap-2 mb-4 border-b pb-3">
                 <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
                 <h2 className="text-gray-800 font-bold text-sm tracking-widest uppercase">
@@ -51,12 +54,11 @@ const KMKPage = () => {
         </div>
     );
 
-    // Bagian Mata Kuliah - List Melebar Penuh
     const CourseList = () => (
         <div className="w-full space-y-3">
             <h2 className="text-gray-800 font-bold text-xs tracking-[0.2em] mb-3 px-1 uppercase opacity-60">Daftar Mata Kuliah Terdaftar</h2>
             {kmkData?.matakuliah?.map((mk, index) => (
-                <div key={index} className="w-full bg-white p-5 rounded-xl border border-gray-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div key={index} className="w-full bg-white p-5 rounded-xl border border-gray-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 print:break-inside-avoid">
                     <div className="flex-1">
                         <h3 className="font-black text-gray-800 text-sm uppercase tracking-tight leading-none">{mk.nama_mk}</h3>
                         <div className="flex gap-4 mt-2">
@@ -67,7 +69,7 @@ const KMKPage = () => {
                     
                     <div className="flex items-center gap-2 md:gap-8 justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0">
                         <div className="bg-gray-50 px-4 py-2 rounded-lg border border-gray-100 text-center min-w-[100px]">
-                            <p className="text-[9px] text-gray-400 font-bold uppercase">Grup Kelas</p>
+                            <p className="text-[9px] text-gray-400 font-bold uppercase">Kelas</p>
                             <p className="text-sm font-black text-blue-700 uppercase">{mk.kelas}</p>
                         </div>
                     </div>
@@ -78,17 +80,35 @@ const KMKPage = () => {
 
     return (
         <main className="flex-1 p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen">
+            {/* CSS In JS untuk keperluan cetak */}
+            <style dangerouslySetInnerHTML={{ __html: `
+                @media print {
+                    .no-print { display: none !important; }
+                    body { background: white !important; }
+                    main { padding: 0 !important; }
+                }
+            `}} />
+
             {/* Header Page */}
             <header className="mb-6 flex justify-between items-end">
                 <div>
                     <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tighter">Kartu Mata Kuliah</h1>
                 </div>
-                <div className="hidden md:block text-right">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase">Institut Widya Pratama</p>
+                <div className="flex items-center gap-4">
+                    {/* Tombol Cetak Baru */}
+                    <button 
+                        onClick={handlePrint}
+                        className="no-print bg-white border-2 border-gray-200 text-gray-700 font-bold px-5 py-2 rounded-xl hover:bg-gray-50 transition-all uppercase text-[10px] tracking-widest flex items-center gap-2 shadow-sm"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        Cetak KMK
+                    </button>
                 </div>
             </header>
             
-            {/* Container Utama - Dibuat W-Full */}
+            {/* Container Utama - Lebar Penuh */}
             <div className="w-full mx-auto">
                 {loading ? (
                     <div className="w-full bg-white p-20 rounded-xl text-center border border-gray-200 shadow-sm">
@@ -106,13 +126,6 @@ const KMKPage = () => {
                     </div>
                 )}
             </div>
-
-            <footer className="mt-10 mb-4">
-                <div className="border-t border-gray-300 pt-4 flex justify-between items-center text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                    <span>Sistem Informasi Akademik</span>
-                    <span>&copy; {new Date().getFullYear()} IWP Pekalongan</span>
-                </div>
-            </footer>
         </main>
     );
 };

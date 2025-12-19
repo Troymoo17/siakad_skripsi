@@ -75,7 +75,7 @@ const HotspotPage = () => {
                                 type="submit" 
                                 className="w-full md:w-auto bg-blue-700 text-white font-black px-12 py-3 rounded-xl hover:bg-blue-800 transition-all uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-blue-100"
                             >
-                                Simpan Password
+                                Simpan
                             </button>
                         </div>
                     </form>

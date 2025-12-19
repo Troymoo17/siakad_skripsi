@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { getMahasiswaData, updateProfile } from '../api/api';
-import profileImage from '../assets/22.240.0007.jpg';
 
 const ProfilePage = () => {
     const [mahasiswaData, setMahasiswaData] = useState(null);
@@ -45,11 +44,27 @@ const ProfilePage = () => {
             {/* Main Content: Desktop uses flex-row, Mobile uses stacking flex-col */}
             <div className="flex flex-col md:flex-row gap-5 md:gap-6">
                 
-                {/* Kolom Kiri: Foto & Kontak (W-full di mobile, W-1/3 di desktop) */}
+                {/* Kolom Kiri: Foto & Kontak  */}
                 <div className="w-full md:w-1/3 p-5 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
                     <div className="mb-4">
-                        <img src={profileImage} alt="Foto Profil" className="w-24 h-24 rounded-full border-4 border-white shadow-lg" id="profile-img" />
-                    </div>
+    {mahasiswaData?.foto ? (
+        // Tampilkan foto dari database jika ada
+        <img 
+            src={mahasiswaData.foto} 
+            alt="Foto Profil" 
+            className="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover" 
+            id="profile-img" 
+        />
+    ) : (
+        // Tampilkan inisial nama jika foto tidak ada
+        <div 
+            className="w-24 h-24 rounded-full border-4 border-white shadow-lg bg-gradient-to-tr from-blue-400 to-cyan-400 flex items-center justify-center text-white text-3xl font-bold"
+            id="profile-fallback"
+        >
+            {mahasiswaData?.nama?.charAt(0) || 'U'}
+        </div>
+    )}
+</div>
                     <h2 className="text-xl font-bold text-gray-800 text-center">{mahasiswaData?.nama || 'Memuat...'}</h2>
                     <span className="text-sm text-gray-500 mb-6">{mahasiswaData?.nim || 'Memuat...'}</span>
 
@@ -84,7 +99,7 @@ const ProfilePage = () => {
                     </form>
                 </div>
 
-                {/* Kolom Kanan: Detail Data Pribadi (W-full di mobile, W-2/3 di desktop) */}
+                {/* Kolom Kanan: Detail Data Pribadi  */}
                 <div className="w-full md:w-2/3 p-5 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100">
                     <h3 className="text-base font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">Informasi Akademik dan Pribadi</h3>
 
@@ -101,7 +116,7 @@ const ProfilePage = () => {
                             <input type="text" value={mahasiswaData?.nim || ''} className="text-sm p-2 rounded-lg bg-gray-100 border border-gray-200" readOnly />
                         </div>
                         
-                        {/* Baris 3: No.KTP (Editable) */}
+                        {/* Baris 3: No.KTP  */}
                         <div className="flex flex-col space-y-0.5">
                             <label className="text-xs text-gray-500 font-medium">No.KTP (NIK)</label>
                             <input type="text" name="nik" value={formData?.nik || ''} onChange={handleChange} 
@@ -114,7 +129,7 @@ const ProfilePage = () => {
                             <input type="text" value={mahasiswaData?.prodi || ''} className="text-sm p-2 rounded-lg bg-gray-100 border border-gray-200" readOnly />
                         </div>
 
-                        {/* Program, Kelas, Angkatan, Dosen PA, dst... (Menggunakan space-y-0.5 dan rounded-lg) */}
+                        {/* Program, Kelas, Angkatan, Dosen PA, dst...  */}
                         <div className="flex flex-col space-y-0.5"><label className="text-xs text-gray-500 font-medium">Program</label><input type="text" value={mahasiswaData?.program || ''} className="text-sm p-2 rounded-lg bg-gray-100 border border-gray-200" readOnly /></div>
                         <div className="flex flex-col space-y-0.5"><label className="text-xs text-gray-500 font-medium">Kelas</label><input type="text" value={mahasiswaData?.kelas || ''} className="text-sm p-2 rounded-lg bg-gray-100 border border-gray-200" readOnly /></div>
                         <div className="flex flex-col space-y-0.5"><label className="text-xs text-gray-500 font-medium">Angkatan</label><input type="text" value={mahasiswaData?.angkatan || ''} className="text-sm p-2 rounded-lg bg-gray-100 border border-gray-200" readOnly /></div>
