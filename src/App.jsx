@@ -42,6 +42,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+          <Route path="lupa-sandi" element={<LupaSandiPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="profile" element={<ProfilePage />} />
@@ -73,7 +74,6 @@ const App = () => {
           <Route path="registrasi/hotspot" element={<HotspotPage />} />
            <Route path="survei-kepuasan/fasilitas" element={<SurveiKepuasanFasilitasPage />} />
           <Route path="survei-kepuasan/skripsi" element={<SurveiKepuasanSkripsiPage />} />
-          <Route path="lupa-sandi" element={<LupaSandiPage />} />
           <Route path="yudisium" element={<YudisiumPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

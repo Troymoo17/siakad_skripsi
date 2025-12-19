@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import logo from '../assets/logo.png';
 import logoOnly from '../assets/logo_only.png';
 
 const LupaSandiPage = () => {
   const [email, setEmail] = useState('');
+  const [tglLahir, setTglLahir] = useState('');
   const navigate = useNavigate();
 
   const handleReset = (e) => {
     e.preventDefault();
     Swal.fire({
       icon: "success",
-      title: "Instruksi Terkirim",
-      text: "Silahkan cek email Anda untuk mengatur ulang kata sandi.",
+      title: "Verifikasi Berhasil",
+      text: "Instruksi pemulihan telah dikirim ke email Anda.",
       confirmButtonColor: "#005c97",
     }).then(() => {
       navigate('/');
@@ -28,8 +29,8 @@ const LupaSandiPage = () => {
 
       <div className="flex-1 flex flex-col md:flex-row items-center justify-center relative z-10 p-4 min-[350px]:p-6">
         
-        {/* Branding Section - Diturunkan agar tidak terlalu ke atas */}
-        <div className="w-full md:w-1/2 flex flex-col items-center md:items-start pt-12 min-[350px]:pt-16 md:pt-0 mb-4 md:mb-0 md:pl-12 lg:pl-20">
+        {/* Branding Section */}
+        <div className="w-full md:w-1/2 flex flex-col items-center md:items-start pt-16 min-[350px]:pt-20 md:pt-0 mb-4 md:mb-0 md:pl-12 lg:pl-20 transition-all duration-500">
           <div className="relative">
             <img 
               src={logoOnly} 
@@ -37,8 +38,8 @@ const LupaSandiPage = () => {
               className="absolute top-1/2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-[-10%] -translate-y-1/2 w-44 min-[350px]:w-56 sm:w-64 md:w-[450px] opacity-10 brightness-0 invert pointer-events-none" 
             />
             
-            <div className="relative z-10 text-center md:text-left text-white">
-              <h1 className="font-black text-2xl min-[350px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tighter drop-shadow-2xl">
+            <div className="relative z-10 text-center md:text-left">
+              <h1 className="font-black text-2xl min-[350px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight tracking-tighter drop-shadow-2xl">
                 PEMULIHAN<br />
                 <span className="text-orange-400">AKUN</span>
               </h1>
@@ -49,43 +50,53 @@ const LupaSandiPage = () => {
           </div>
         </div>
 
-        {/* Card Reset Password - Posisi Turun menembus area putih */}
-        <div className="w-full max-w-[450px] md:w-[420px] lg:w-[480px] translate-y-20 min-[350px]:translate-y-24 md:translate-y-32 lg:translate-y-36">
+        {/* Card Reset Password  */}
+        <div className="w-full max-w-[450px] md:w-[420px] lg:w-[480px] translate-y-24 min-[350px]:translate-y-28 md:translate-y-32 lg:translate-y-36 transition-all duration-500">
           <div className="bg-white shadow-[0_25px_60px_rgba(0,0,0,0.35)] rounded-[2.5rem] p-7 min-[350px]:p-9 sm:p-12 border border-gray-100 mx-auto">
-            <div className="flex flex-col items-center mb-6">
-              <div className="bg-blue-50 p-4 rounded-full mb-4">
-                <img src={logo} alt="Logo IWP" className="w-12 min-[350px]:w-14" />
-              </div>
-              <h2 className="text-lg min-[350px]:text-xl font-black text-gray-800 uppercase tracking-tight">Lupa Kata Sandi?</h2>
-              <p className="text-[10px] min-[350px]:text-xs text-gray-500 text-center mt-2 font-medium px-4">
-                Masukkan email yang terdaftar untuk menerima instruksi pemulihan.
-              </p>
+            <div className="flex flex-col items-center mb-8">
+              <img src={logo} alt="Logo IWP" className="w-16 min-[350px]:w-20 mb-4" />
+              <h2 className="text-lg min-[350px]:text-xl font-black text-gray-800 uppercase tracking-tight">Verifikasi Data</h2>
             </div>
 
-            <form onSubmit={handleReset} className="space-y-4 md:space-y-6">
+            <form onSubmit={handleReset} className="space-y-4 md:space-y-5">
+              {/* Input Email */}
               <div>
                 <label className="block text-gray-700 text-[10px] min-[350px]:text-xs font-bold uppercase mb-2 tracking-widest ml-1">
                   Alamat Email
                 </label>
                 <input 
                   type="email" 
-                  placeholder="nama@mhs.widya-pratama.ac.id" 
+                  placeholder="Masukkan email terdaftar" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-xs min-[350px]:text-sm transition-all"
+                  className="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm transition-all"
+                  required 
+                />
+              </div>
+
+              {/* Input Tanggal Lahir - Baru */}
+              <div>
+                <label className="block text-gray-700 text-[10px] min-[350px]:text-xs font-bold uppercase mb-2 tracking-widest ml-1">
+                  Tanggal Lahir
+                </label>
+                <input 
+                  type="date" 
+                  value={tglLahir}
+                  onChange={(e) => setTglLahir(e.target.value)}
+                  className="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm transition-all text-gray-600"
                   required 
                 />
               </div>
 
               <button 
                 type="submit" 
-                className="w-full bg-[#005c97] hover:bg-[#363795] text-white font-black py-4 rounded-2xl shadow-xl transition-all transform active:scale-95 uppercase tracking-widest text-xs sm:text-sm"
+                className="w-full bg-[#005c97] hover:bg-[#363795] text-white font-black py-4 rounded-2xl shadow-xl transition-all transform active:scale-95 uppercase tracking-widest text-xs sm:text-sm mt-2"
               >
-                Kirim Instruksi
+                Verifikasi & Kirim
               </button>
 
-              <div className="text-center pt-2">
-                <Link to="/" className="text-xs sm:text-sm font-bold text-gray-400 hover:text-blue-600 transition-all flex items-center justify-center gap-2">
+              <div className="text-center mt-4">
+                <Link to="/" className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors flex items-center justify-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                   </svg>
@@ -98,7 +109,7 @@ const LupaSandiPage = () => {
       </div>
 
       {/* Footer */}
-      <div className="relative z-10 py-6 text-center mt-32 min-[350px]:mt-40 md:mt-0">
+      <div className="relative z-10 py-6 text-center mt-36 min-[350px]:mt-44 md:mt-0">
         <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-4">
           &copy; {new Date().getFullYear()} Institut Widya Pratama
         </p>
