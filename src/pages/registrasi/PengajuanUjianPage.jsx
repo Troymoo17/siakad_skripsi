@@ -12,11 +12,11 @@ const PengajuanUjianPage = () => {
         pembimbing1: '',
         pembimbing2: '',
         no_hp: '',
-        nik: '', // Akan diisi otomatis
+        nik: '', 
         nisn: '',
         nomor_ijazah: '',
         penerima_kps: 'Tidak',
-        alamat_lengkap: '', // Akan diisi otomatis
+        alamat_lengkap: '', 
         sertifikasi: []
     });
 
@@ -33,8 +33,8 @@ const PengajuanUjianPage = () => {
                     ...prev,
                     no_hp: academic.hp_terbaru || '',
                     judul_skripsi: academic.judul_disetujui || '',
-                    nik: academic.nik || '', // Ambil dari data mahasiswa
-                    alamat_lengkap: academic.alamat_lengkap || '' // Ambil dari data mahasiswa
+                    nik: academic.nik || '', 
+                    alamat_lengkap: academic.alamat_lengkap || '' 
                 }));
             }
 
@@ -98,7 +98,7 @@ const PengajuanUjianPage = () => {
             </header>
 
             <div className="space-y-8">
-                {/* Section Data Akademik (Sesuai Pengajuan Judul) */}
+                {/* Section Data Akademik */}
                 <section className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
                     <div className="flex items-center gap-2 mb-6 border-b pb-3">
                         <div className="w-1.5 h-5 bg-blue-700 rounded-full"></div>
@@ -211,7 +211,7 @@ const PengajuanUjianPage = () => {
                     </form>
                 </section>
 
-                {/* Histori Table dengan Style Yang Sama */}
+                {/* Histori Table*/}
                 <section>
                     <div className="flex items-center gap-2 mb-4 px-1">
                         <div className="w-1 h-4 bg-blue-700 rounded-full"></div>

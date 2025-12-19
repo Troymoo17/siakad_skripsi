@@ -58,11 +58,16 @@ const Sidebar = ({ mahasiswaData, isSidebarOpen, setSidebarOpen, isCollapsed }) 
             {!isCollapsed && (
                 <NavLink to="/dashboard/profile" onClick={handleLinkClick} className="mx-4 bg-white/10 border border-white/20 rounded-2xl p-4 mb-6 flex flex-col items-center backdrop-blur-sm transition-transform hover:scale-[1.02]">
                     <div className="relative">
-            {mahasiswaData?.foto ? (
+            {mahasiswaData?.foto_profil_url ? (
                 <img 
-                    src={mahasiswaData.foto} 
+                    src={mahasiswaData.foto_profil_url} 
                     alt="Foto Profil" 
                     className="w-16 h-16 mb-3 rounded-full border-2 border-white object-cover shadow-lg" 
+                    id="profile-img" 
+                    onError={(e) => {
+                    e.target.onerror = null; 
+                    e.target.src = "https://ui-avatars.com/api/?name=" + mahasiswaData?.nama;
+                }}
                 />
             ) : (
                 <div className="w-16 h-16 mb-3 rounded-full border-2 border-white bg-gradient-to-tr from-blue-100 to-white flex items-center justify-center text-blue-600 font-bold text-2xl shadow-lg">

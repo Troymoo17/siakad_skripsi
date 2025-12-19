@@ -35,8 +35,19 @@ const Navbar = ({ toggleSidebar, mahasiswaData }) => {
         </div>
         
         {/* Avatar */}
-        <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white font-bold text-sm border border-white/30 shadow-sm">
-          {mahasiswaData?.nama?.charAt(0) || 'U'}
+        <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white font-bold text-sm border border-white/30 shadow-sm overflow-hidden">
+           {mahasiswaData?.foto_profil_url ? (
+            <img 
+               src={mahasiswaData.foto_profil_url} 
+               alt="Avatar" 
+               className="w-full h-full object-cover"
+               onError={(e) => {
+               e.target.style.display = 'none';
+             }}
+           />
+        ) : (
+           <span>{mahasiswaData?.nama?.charAt(0) || 'U'}</span>
+     )}
         </div>
       </div>
     </nav>

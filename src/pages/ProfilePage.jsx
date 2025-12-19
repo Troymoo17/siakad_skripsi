@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getMahasiswaData, updateProfile } from '../api/api';
+import Swal from 'sweetalert2';
 
 const ProfilePage = () => {
     const [mahasiswaData, setMahasiswaData] = useState(null);
@@ -23,16 +24,38 @@ const ProfilePage = () => {
         e.preventDefault();
         const nim = localStorage.getItem('loggedInUserNim');
         const updateData = new FormData();
-        updateData.append('email', formData.email);
-        updateData.append('telp', formData.telp);
-        updateData.append('handphone', formData.handphone);
-        updateData.append('nik', formData.nik);
-        const response = await updateProfile(nim, updateData);
-        if (response.status === 'success') {
-            alert(response.message);
-        } else {
-            alert('Gagal memperbarui profil: ' + response.message);
-        }
+        
+        updateData.append('email', formData.email || '');
+        updateData.append('telp', formData.telp || '');
+        updateData.append('handphone', formData.handphone || '');
+        updateData.append('nik', formData.nik || '');
+        
+        Swal.fire({
+            title: 'Mohon Tunggu...',
+            text: 'Sedang memperbarui profil Anda',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+            const response = await updateProfile(nim, updateData);
+            
+            if (response.status === 'success') {
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: response.message,
+                    icon: 'success',
+                    confirmButtonColor: '#1d4ed8',
+                });
+            } else {
+                Swal.fire({
+                    title: 'Gagal',
+                    text: 'Gagal memperbarui profil: ' + response.message,
+                    icon: 'error',
+                    confirmButtonColor: '#1d4ed8',
+                });
+            }
+        
     };
 
     return (
@@ -41,30 +64,32 @@ const ProfilePage = () => {
                 <h1 className="text-xl md:text-2xl font-bold text-gray-800">Profil Mahasiswa</h1>
             </header>
             
-            {/* Main Content: Desktop uses flex-row, Mobile uses stacking flex-col */}
+            {/* Main Content */}
             <div className="flex flex-col md:flex-row gap-5 md:gap-6">
                 
                 {/* Kolom Kiri: Foto & Kontak  */}
-                <div className="w-full md:w-1/3 p-5 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
-                    <div className="mb-4">
-    {mahasiswaData?.foto ? (
-        // Tampilkan foto dari database jika ada
-        <img 
-            src={mahasiswaData.foto} 
-            alt="Foto Profil" 
-            className="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover" 
-            id="profile-img" 
-        />
-    ) : (
-        // Tampilkan inisial nama jika foto tidak ada
-        <div 
-            className="w-24 h-24 rounded-full border-4 border-white shadow-lg bg-gradient-to-tr from-blue-400 to-cyan-400 flex items-center justify-center text-white text-3xl font-bold"
-            id="profile-fallback"
-        >
-            {mahasiswaData?.nama?.charAt(0) || 'U'}
-        </div>
-    )}
-</div>
+               <div className="w-full md:w-1/3 p-5 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+    <div className="mb-4">
+        {mahasiswaData?.foto_profil_url ? (
+            <img 
+                src={mahasiswaData.foto_profil_url} 
+                alt="Foto Profil" 
+                className="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover" 
+                id="profile-img" 
+                onError={(e) => {
+                    e.target.onerror = null; 
+                    e.target.src = "https://ui-avatars.com/api/?name=" + mahasiswaData?.nama;
+                }}
+            />
+        ) : (
+            <div 
+                className="w-24 h-24 rounded-full border-4 border-white shadow-lg bg-gradient-to-tr from-blue-700 to-blue-500 flex items-center justify-center text-white text-3xl font-bold uppercase"
+                id="profile-fallback"
+            >
+                {mahasiswaData?.nama?.charAt(0) || 'U'}
+            </div>
+        )}
+    </div>
                     <h2 className="text-xl font-bold text-gray-800 text-center">{mahasiswaData?.nama || 'Memuat...'}</h2>
                     <span className="text-sm text-gray-500 mb-6">{mahasiswaData?.nim || 'Memuat...'}</span>
 
