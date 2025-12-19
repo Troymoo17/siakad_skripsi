@@ -8,21 +8,21 @@ import JadwalKuliahPage from './pages/perkuliahan/JadwalKuliahPage';
 import KehadiranPage from './pages/perkuliahan/KehadiranPage';
 import DetailKehadiranPage from './pages/perkuliahan/DetailKehadiranPage';
 import JadwalUjianPage from './pages/ujian dan nilai/JadwalUjianPage';
-import KartuHasilStudiPage from './pages/ujian dan nilai/KartuHasilStudiPage';
-import DaftarNilaiKumulatifPage from './pages/ujian dan nilai/DaftarNilaiKumulatifPage';
+import KartuHasilStudiPage from './pages/ujian dan nilai/kartuHasilStudiPage';
+import DaftarNilaiKumulatifPage from './pages/ujian dan nilai/daftarNilaiKumulatifPage';
 import KurikulumPage from './pages/registrasi/KurikulumPage';
 import KRSPage from './pages/registrasi/kartuRencanaStudiPage';
 import KMKPage from './pages/registrasi/kartuMataKuliahPage';
 import PembayaranPage from './pages/keuangan/PembayaranPage';
-import PointBookPage from './pages/histori/PointBookPage';
+import PointBookPage from './pages/histori/pointBookPage';
 import HistoriPinjamanPage from './pages/histori/HistoriPinjamanPage';
 import PengajuanMagangPage from './pages/registrasi/PengajuanMagangPage';
 import PengajuanJudulPage from './pages/registrasi/PengajuanJudulPage';
 import PengajuanUjianPage from './pages/registrasi/PengajuanUjianPage';
 import IkadIkasPage from './pages/registrasi/ikad_ikasPage';
 import BimbinganProposalPage from './pages/bimbingan/bimbinganProposalPage';
-import BimbinganSkripsiPage from './pages/bimbingan/BimbinganSkripsiPage';
-import BimbinganSidangPage from './pages/bimbingan/BimbinganSidangPage';
+import BimbinganSkripsiPage from './pages/bimbingan/bimbinganSkripsiPage';
+import BimbinganSidangPage from './pages/bimbingan/bimbinganSidangPage';
 import DownloadPage from './pages/download/downloadPage';
 import UploadMagangPage from './pages/upload/uploadMagang';
 import PengumumanPage from './pages/informasi/pengumumanPage';
@@ -33,6 +33,7 @@ import SurveiKepuasanSkripsiPage from './pages/survei/surveiKepuasanSkripsi';
 import IkadKuesionerPage from './pages/registrasi/ikadKuesionerPage';
 import IkasKuesionerPage from './pages/registrasi/ikasKuesionerPage';
 import LupaSandiPage from './pages/LupaSandi';
+import YudisiumPage from './pages/YudisiumPage';
 
 import './index.css';
 
@@ -73,6 +74,7 @@ const App = () => {
            <Route path="survei-kepuasan/fasilitas" element={<SurveiKepuasanFasilitasPage />} />
           <Route path="survei-kepuasan/skripsi" element={<SurveiKepuasanSkripsiPage />} />
           <Route path="lupa-sandi" element={<LupaSandiPage />} />
+          <Route path="yudisium" element={<YudisiumPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
