@@ -294,17 +294,26 @@ export const submitHotspotPassword = async (nim, password) => {
     return data;
 };
 export const submitSurveiKepuasan = async (nim, jenis_survei, jawaban) => {
-    const formData = new FormData();
-    formData.append('nim', nim);
-    formData.append('jenis_survei', jenis_survei);
-    formData.append('jawaban', JSON.stringify(jawaban));
+    try {
+        const formData = new FormData();
+        formData.append('nim', nim);
+        formData.append('jenis_survei', jenis_survei);
+        formData.append('jawaban', JSON.stringify(jawaban));
 
-    const response = await fetch(`${BASE_URL}/survei_kepuasan.php`, {
-        method: 'POST',
-        body: formData,
-    });
-    const data = await response.json();
-    return data;
+        const response = await fetch(`${BASE_URL}/survei_kepuasan.php`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error pada server');
+        }
+
+        return await response.json();
+    } catch (error) {
+        return { status: 'error', message: error.message };
+    }
 };
 export const submitSurveiKepuasanIkadIkas = async (payload) => {
     const formData = new FormData();

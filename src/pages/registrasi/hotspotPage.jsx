@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getMahasiswaData, submitHotspotPassword } from '../../api/api';
+import Swal from 'sweetalert2'; 
+import logoKecil from '../../assets/logo_kecil.png';
 
 const HotspotPage = () => {
     const [mahasiswaData, setMahasiswaData] = useState(null);
     const [password, setPassword] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     useEffect(() => {
         const nim = localStorage.getItem('loggedInUserNim');
@@ -21,14 +24,55 @@ const HotspotPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const nim = localStorage.getItem('loggedInUserNim');
+
+        Swal.fire({
+            title: 'Memproses...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+
         const response = await submitHotspotPassword(nim, password);
         
         if (response.status === 'success') {
-            alert(response.message);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Akun hotspot Anda telah dikonfigurasi.',
+                confirmButtonColor: '#1d4ed8'
+            });
+            setIsSubmitted(true); 
         } else {
-            alert('Gagal menyimpan password hotspot: ' + response.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Gagal menyimpan password hotspot: ' + response.message,
+                confirmButtonColor: '#ef4444'
+            });
         }
     };
+
+    if (isSubmitted) {
+        return (
+            <main className="flex-1 p-4 md:p-8 lg:p-10 bg-gray-50 min-h-screen flex items-center justify-center">
+                <div className="bg-white p-10 rounded-3xl shadow-xl text-center max-w-md w-full border border-blue-100">
+                    <div className="bg-blue-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                        <img src={logoKecil} alt="Logo" className="w-16 h-16 object-contain" />
+                    </div>
+                    <h2 className="text-2xl font-black text-gray-800 mb-2 uppercase tracking-tight text-blue-700">Pendaftaran Selesai</h2>
+                    <p className="text-gray-500 font-bold uppercase text-[10px] tracking-widest leading-relaxed">
+                        Konfigurasi Hotspot Berhasil. Silakan gunakan kredensial Anda untuk login di area kampus.
+                    </p>
+                    <button 
+                        onClick={() => window.location.href = '/dashboard'}
+                        className="mt-8 w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-4 rounded-2xl transition-all shadow-lg active:scale-95 uppercase tracking-widest text-xs"
+                    >
+                        Kembali ke Dashboard
+                    </button>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="flex-1 p-4 md:p-8 lg:p-10 bg-gray-50 min-h-screen">
@@ -57,7 +101,7 @@ const HotspotPage = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest" htmlFor="password">Password</label>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest" htmlFor="password">Password Baru</label>
                                 <input 
                                     type="password" 
                                     id="password" 
@@ -75,7 +119,7 @@ const HotspotPage = () => {
                                 type="submit" 
                                 className="w-full md:w-auto bg-blue-700 text-white font-black px-12 py-3 rounded-xl hover:bg-blue-800 transition-all uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-blue-100"
                             >
-                                Simpan
+                                Simpan Konfigurasi
                             </button>
                         </div>
                     </form>
@@ -91,13 +135,10 @@ const HotspotPage = () => {
                     </h3>
                     <ol className="list-decimal list-inside space-y-3">
                         <li className="text-xs font-bold text-gray-600 uppercase leading-relaxed tracking-wide">
-                            Silakan login dengan Username dan password.
+                            Silakan login dengan Username dan password yang baru saja dibuat.
                         </li>
                         <li className="text-xs font-bold text-gray-600 uppercase leading-relaxed tracking-wide">
-                            Username adalah NIM Anda dan passwordnya sesuai yang Anda input.
-                        </li>
-                        <li className="text-xs font-bold text-gray-600 uppercase leading-relaxed tracking-wide">
-                            Satu User dapat digunakan untuk 2 perangkat (maksimal).
+                            Satu User dapat digunakan untuk 2 perangkat secara bersamaan.
                         </li>
                     </ol>
                 </section>

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { submitSurveiKepuasan } from '../../api/api';
+import Swal from 'sweetalert2';
+import logoKecil from '../../assets/logo_kecil.png';
 
 const SurveiKepuasanSkripsiPage = () => {
     const [answers, setAnswers] = useState({
         q1: '', q2: '', q3: '', q4: '', q5: '', q6: ''
     });
+    // State untuk melacak status pengiriman
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -14,18 +18,65 @@ const SurveiKepuasanSkripsiPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const nim = localStorage.getItem('loggedInUserNim');
+        
         if (!nim) {
-            alert('NIM tidak ditemukan. Harap login kembali.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Sesi Berakhir',
+                text: 'NIM tidak ditemukan. Harap login kembali.',
+                confirmButtonColor: '#3b82f6'
+            });
             return;
         }
 
+        Swal.fire({
+            title: 'Mengirim...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+
         const response = await submitSurveiKepuasan(nim, 'skripsi', answers);
+        
         if (response.status === 'success') {
-            alert(response.message);
+            Swal.fire({
+                icon: 'success',
+                title: 'Terima Kasih!',
+                text: response.message,
+                confirmButtonColor: '#3b82f6'
+            });
+            setIsSubmitted(true);
         } else {
-            alert('Gagal mengirim survei: ' + response.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Gagal mengirim survei: ' + response.message,
+                confirmButtonColor: '#ef4444'
+            });
         }
     };
+
+    if (isSubmitted) {
+        return (
+            <main className="flex-1 p-4 md:p-8 lg:p-10 bg-[#f8fafc] min-h-screen flex items-center justify-center">
+                <div className="bg-white p-10 rounded-3xl shadow-xl text-center max-w-md w-full border border-blue-50">
+                    <div className="bg-blue-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                        <img src={logoKecil} alt="Logo" className="w-16 h-16 object-contain" />
+                    </div>
+                    <h2 className="text-2xl font-black text-gray-800 mb-2 uppercase tracking-tight">Data Tersimpan!</h2>
+                    <p className="text-gray-500 font-medium leading-relaxed">
+                        Terima kasih telah meluangkan waktu untuk mengisi survei kepuasan skripsi.
+                    </p>
+                    <button 
+                        onClick={() => window.location.href = '/dashboard'}
+                        className="mt-8 w-full bg-[#005c97] hover:bg-[#363795] text-white font-bold py-4 rounded-2xl transition-all shadow-lg active:scale-95 uppercase tracking-widest text-sm"
+                    >
+                        Kembali ke Dashboard
+                    </button>
+                </div>
+            </main>
+        );
+    }
 
     const questions = [
         "Pembimbing skripsi memberikan bimbingan yang jelas dan terarah.",
@@ -36,13 +87,7 @@ const SurveiKepuasanSkripsiPage = () => {
         "Durasi pengerjaan skripsi yang diberikan oleh pihak jurusan sudah sesuai."
     ];
 
-    const options = [
-        "Sangat Setuju",
-        "Setuju",
-        "Kurang Setuju",
-        "Tidak Setuju",
-        "Sangat Tidak Setuju"
-    ];
+    const options = ["Sangat Setuju", "Setuju", "Kurang Setuju", "Tidak Setuju", "Sangat Tidak Setuju"];
 
     return (
         <main className="flex-1 p-4 md:p-8 lg:p-10 bg-[#f8fafc] min-h-screen">
@@ -72,7 +117,7 @@ const SurveiKepuasanSkripsiPage = () => {
                         </div>
                     ))}
                     <div className="flex justify-end">
-                        <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <button type="submit" className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-bold rounded-xl shadow-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all uppercase tracking-wider">
                             Kirim Survei
                         </button>
                     </div>
